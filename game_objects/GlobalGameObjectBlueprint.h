@@ -10,7 +10,9 @@ class GlobalGameObjectBlueprint {
         virtual void updateObject()=0;
         
         virtual void drawObject(SDL_RendererFlip flip)=0;
-    
+
+        int getImgXPos(){return imgXPos;}
+        int getImgYPos(){return imgYPos;}
     protected:
 
         int imgXPos;

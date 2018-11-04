@@ -35,16 +35,7 @@ bool GameLogic::initGameLogic(){
 }
 
 void GameLogic::handleUserInput(){
-    SDL_Event event;
-    SDL_WaitEvent(&event);
-
-    switch(event.type){
-        case SDL_QUIT: setGameRunning(false); break;
-            
-        default:
-            break;
-
-    }
+    HandleUserEvent::Instance()->updateUserInput();
 }
 
 void GameLogic::updateGameLogic(){

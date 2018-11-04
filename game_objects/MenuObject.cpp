@@ -14,7 +14,10 @@ void MenuObject::loadObject(std::string imgFileNameP, std::string imageIDP, int 
 
 }
 
-void MenuObject::updateObject(){}
+void MenuObject::updateObject(){
+    imgXPos++;
+    
+}
 
 void MenuObject::drawObject(SDL_RendererFlip flip){
     if(currentFrame <0 && currentRow<0)

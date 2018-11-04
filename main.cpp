@@ -19,7 +19,7 @@ int main(int arg, char *argv[]){
         SmileGameLogic::Instance()->renderSceneGameLogic();    
 
 
-        SDL_Delay(500);        
+        SDL_Delay(10);        
     }
 
 
