@@ -13,6 +13,8 @@ void HandleUserEvent::updateUserInput(){
         break;
 
         case SDL_MOUSEBUTTONDOWN:
+            SmileSoundHandler::Instance()->loadSound("assets/music/can-to-table-1.wav", "knock", SOUND_EFFECT);
+            SmileSoundHandler::Instance()->playEffectMusic("knock", 0);
 
         break;
 

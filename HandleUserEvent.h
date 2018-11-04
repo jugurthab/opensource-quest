@@ -4,7 +4,7 @@
 #include <iostream>
 #include <SDL.h>
 #include "GameLogic.h"
-
+#include "soundHandler/SoundHandler.h"
 
 class HandleUserEvent
 {

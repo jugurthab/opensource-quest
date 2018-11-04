@@ -23,6 +23,9 @@ bool EntryMenu::onEnterState(){
     startbutton = new MenuObject();
     startbutton->loadObject("assets/animate.bmp", "animate", 250, 250, 128, 83, -1, -1);
     
+    SmileSoundHandler::Instance()->loadSound("assets/music/backMusic.mp3", "back", SOUND_MUSIC);
+    SmileSoundHandler::Instance()->playBackMusic("back", -1);
+
     stateObjects.push_back(startbutton);
         
 
