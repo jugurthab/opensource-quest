@@ -25,9 +25,9 @@ bool GameLogic::initGameLogic(){
     
     
     SDL_SetRenderDrawColor(smileRenderer, 255, 255, 255, 255);
-    p = new PlayerUser();
-    p->loadObject("assets/rider.bmp", "rider", 0, 0, 128, 83, -1, -1);
-    
+    stateMachineDriver = new StateMachineDriver();
+    stateMachineDriver->switchState(new EntryMenu());
+
     setGameRunning(true);
 
     return true;
@@ -48,13 +48,13 @@ void GameLogic::handleUserInput(){
 }
 
 void GameLogic::updateGameLogic(){
-
+    stateMachineDriver->updateMachine();
 
 }
 
 void GameLogic::renderSceneGameLogic(){
     SDL_RenderClear(smileRenderer);
-    p->drawObject(SDL_FLIP_NONE);   
+    stateMachineDriver->renderMachine();
     SDL_RenderPresent(smileRenderer);
     
 }

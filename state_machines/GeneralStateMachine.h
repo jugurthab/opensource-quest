@@ -1,20 +1,27 @@
 
-#include <iostream>
+#ifndef __GeneralStateMachine__
+#define __GeneralStateMachine__
 
+#include <iostream>
+#include <SDL.h>
+#include <vector>
+#include "../game_objects/GlobalGameObjectBlueprint.h"
 class GeneralStateMachine{
    public:
         virtual void updateState() = 0;
         virtual void renderState() = 0;
         
-        virtual void onEnterState() = 0;
-        virtual void onExitState() = 0;
+        virtual bool onEnterState() = 0;
+        virtual bool onExitState() = 0;
 
-        virtual void addState() = 0;
-        virtual void switchState() = 0;
-        virtual void removeState() = 0;
+        virtual std::string getStateName() const = 0;
 
-    private:
+    protected:
 
-        std::vector<GeneralStateMachine*> smileGameState;
+        std::vector<GlobalGameObjectBlueprint*> stateObjects;
+        
+        
 
-}
+};
+
+#endif

@@ -4,8 +4,10 @@
 
 #include <iostream>
 #include <SDL.h>
-#include "game_objects/PlayerUser.h" 
-#include "EntryMenu.h"
+#include "game_objects/PlayerUser.h"  
+#include "state_machines/EntryMenu.h"
+#include "state_machines/StateMachineDriver.h"
+
 
 class GameLogic{
     public:
@@ -46,9 +48,10 @@ class GameLogic{
 
     SDL_Window *smileWindow;
     SDL_Renderer *smileRenderer;
-    PlayerUser *p;
+    StateMachineDriver *stateMachineDriver;
+
     bool gameRunning;
-    EntryMenu *m;
+    
 
 };
 typedef GameLogic SmileGameLogic;
