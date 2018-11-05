@@ -39,7 +39,7 @@ void ImgManager::drawImage(std::string imageID, int imgXPos, int imgYPos, int im
 
 void ImgManager::drawSpriteAnimation(std::string imageID, int imgXPos, int imgYPos, int imgWidth, int imgHeight, int currentFrame, int currentRow, SDL_RendererFlip flip){
     SDL_Rect srcRect, destRect;
-    srcRect.x = currentFrame;
+    srcRect.x = currentFrame * imgWidth;
 
     srcRect.y = currentRow;
 

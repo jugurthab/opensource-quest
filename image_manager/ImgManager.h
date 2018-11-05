@@ -1,10 +1,10 @@
 
 #ifndef __ImgManager__
 #define __ImgManager__
-
 #include <iostream>
 #include <SDL.h>
 #include <map>
+
 #include "../GameLogic.h"
 class ImgManager{
     public:
@@ -20,6 +20,10 @@ class ImgManager{
         void drawImage(std::string imageID, int imgXPos, int imgYPos, int imgWidth, int imgHeight, SDL_RendererFlip flip=SDL_FLIP_NONE);
 
         void drawSpriteAnimation(std::string imageID, int imgXPos, int imgYPos, int imgWidth, int imgHeight, int currentFrame, int currentRow, SDL_RendererFlip flip=SDL_FLIP_NONE);
+
+        void addTexture(SDL_Texture *texture, std::string textureID){
+            imgLoaded[textureID] = texture;
+        }
 
     private:
         ImgManager(){}
