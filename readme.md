@@ -17,7 +17,7 @@ Opensource quest is based on **SDL** and some of it's extensions :
 
 A makefile will be available soon but one can :
 
-$ g++ main.cpp GameLogic.cpp image_manager/ImgManager.cpp game_objects/PlayerUser.cpp state_machines/EntryMenu.cpp state_machines/StateMachineDriver.cpp game_objects/MenuObject.cpp HandleUserEvent.cpp soundHandler/SoundHandler.cpp game_objects/TextObject.cpp font_manager/FontManager.cpp -o main \`sdl2-config --cflags --libs\` -lSDL2_mixer -lSDL2_ttf
+$ g++ main.cpp GameLogic.cpp image_manager/ImgManager.cpp game_objects/PlayerUser.cpp state_machines/EntryMenu.cpp state_machines/StateMachineDriver.cpp game_objects/MenuObject.cpp HandleUserEvent.cpp soundHandler/SoundHandler.cpp game_objects/TextObject.cpp font_manager/FontManager.cpp state_machines/GameScene.cpp state_machines/GameOverScene.cpp -o main \`sdl2-config --cflags --libs\` -lSDL2_mixer -lSDL2_ttf
 
 
-**Observe the animal animating as you move the mouse.** 
+**Have faith in opensource!!!!!!!!!!!!** 

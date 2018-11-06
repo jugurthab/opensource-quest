@@ -21,7 +21,7 @@ class HandleUserEvent
         }
 
 
-        void updateUserInput();
+        SDL_Event updateUserInput();
     private:
 
         static HandleUserEvent* smileHandleUserEvent;

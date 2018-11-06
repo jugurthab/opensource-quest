@@ -13,6 +13,9 @@ class GlobalGameObjectBlueprint {
 
         int getImgXPos(){return imgXPos;}
         int getImgYPos(){return imgYPos;}
+
+        int getImgWidth(){return imgWidth;}
+        int getImgHeight(){return imgHeight;}
     protected:
 
         int imgXPos;

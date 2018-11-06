@@ -1,10 +1,10 @@
 #include "HandleUserEvent.h"
 
 HandleUserEvent* HandleUserEvent::smileHandleUserEvent = NULL;
-void HandleUserEvent::updateUserInput(){
+SDL_Event HandleUserEvent::updateUserInput(){
     
     SDL_Event event;
-    SDL_WaitEvent(&event);
+    SDL_PollEvent(&event);
 
     switch(event.type){
         case SDL_QUIT: 
@@ -12,7 +12,7 @@ void HandleUserEvent::updateUserInput(){
             SmileGameLogic::Instance()->setGameRunning(false);
         break;
 
-        case SDL_MOUSEBUTTONDOWN:
+        /*case SDL_MOUSEBUTTONDOWN:
             SmileSoundHandler::Instance()->loadSound("assets/music/can-to-table-1.wav", "knock", SOUND_EFFECT);
             SmileSoundHandler::Instance()->playEffectMusic("knock", 0);
 
@@ -25,9 +25,15 @@ void HandleUserEvent::updateUserInput(){
 
 
         case SDL_KEYDOWN:
-
-        break;    
+            switch(event.key.keysym.sym){
+                case SDLK_ESCAPE:
+                        
+                    break;
+            }
+        break; */
+   
     }
+    return event;
 
 }
 

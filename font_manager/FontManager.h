@@ -13,7 +13,7 @@ class FontManager{
                 fontManager = new FontManager();
             return fontManager;
         } 
-        SDL_Texture* loadFont(std::string FontFilename, std::string fontID, int fontSize);
+        SDL_Texture* loadFont(std::string FontFilename, std::string fontID, int fontSize, SDL_Color color);
 
 
     private:

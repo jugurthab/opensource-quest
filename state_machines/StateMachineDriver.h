@@ -7,6 +7,12 @@
 
 class StateMachineDriver{
     public:
+        static StateMachineDriver* Instance(){
+            if(stateMachineDriver==NULL)
+                stateMachineDriver = new StateMachineDriver();      
+            return stateMachineDriver;
+        } 
+
         void addState(GeneralStateMachine *statMachine);
         void switchState(GeneralStateMachine *statMachine);
         void removeState();
@@ -14,10 +20,16 @@ class StateMachineDriver{
         void updateMachine();
         void renderMachine();
 
+        void handleEventStateMachines();
+
     private:
+        StateMachineDriver(){};
+        ~StateMachineDriver(){};
+        static StateMachineDriver *stateMachineDriver;
+ 
         std::vector<GeneralStateMachine*> stateMachines;
 
 };
-
+typedef StateMachineDriver SmileStateMachine;
 
 #endif 

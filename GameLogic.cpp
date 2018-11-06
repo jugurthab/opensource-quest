@@ -25,8 +25,8 @@ bool GameLogic::initGameLogic(){
     
     
     SDL_SetRenderDrawColor(smileRenderer, 255, 255, 255, 255);
-    stateMachineDriver = new StateMachineDriver();
-    stateMachineDriver->switchState(new EntryMenu());
+    
+    SmileStateMachine::Instance()->switchState(new EntryMenu());
 
     setGameRunning(true);
 
@@ -35,23 +35,25 @@ bool GameLogic::initGameLogic(){
 }
 
 void GameLogic::handleUserInput(){
-    HandleUserEvent::Instance()->updateUserInput();
+    SmileStateMachine::Instance()->handleEventStateMachines();
 }
 
 void GameLogic::updateGameLogic(){
-    stateMachineDriver->updateMachine();
+    SmileStateMachine::Instance()->updateMachine();
 
 }
 
 void GameLogic::renderSceneGameLogic(){
     SDL_RenderClear(smileRenderer);
-    stateMachineDriver->renderMachine();
+    SmileStateMachine::Instance()->renderMachine();
     SDL_RenderPresent(smileRenderer);
     
 }
 
 void GameLogic::cleanGameScene(){
+    setGameRunning(false);
     SDL_DestroyWindow(smileWindow);
     SDL_DestroyRenderer(smileRenderer);
     SDL_Quit();
+    
 }

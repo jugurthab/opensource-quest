@@ -15,7 +15,7 @@ void MenuObject::loadObject(std::string imgFileNameP, std::string imageIDP, int 
 }
 
 void MenuObject::updateObject(){
-    currentFrame = (SDL_GetTicks() / 100)%6;
+    
     
 }
 

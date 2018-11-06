@@ -14,6 +14,8 @@ class GeneralStateMachine{
         virtual bool onEnterState() = 0;
         virtual bool onExitState() = 0;
 
+
+        virtual void handleEvent() = 0;
         virtual std::string getStateName() const = 0;
 
     protected:

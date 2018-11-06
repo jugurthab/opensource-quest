@@ -48,7 +48,7 @@ class GameLogic{
 
     SDL_Window *smileWindow;
     SDL_Renderer *smileRenderer;
-    StateMachineDriver *stateMachineDriver;
+    
 
     bool gameRunning;
     

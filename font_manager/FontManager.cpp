@@ -9,8 +9,7 @@ FontManager::~FontManager(){
     TTF_Quit();
 }
 
-SDL_Texture* FontManager::loadFont(std::string FontFilename, std::string fontID, int fontSize){
-    SDL_Color color = {255,0,0};
+SDL_Texture* FontManager::loadFont(std::string FontFilename, std::string fontID, int fontSize, SDL_Color color){
     TTF_Font *font = TTF_OpenFont(FontFilename.c_str(), fontSize);
 
     if(font==NULL){

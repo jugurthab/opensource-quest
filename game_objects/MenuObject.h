@@ -12,6 +12,11 @@ class MenuObject : public GlobalGameObjectBlueprint {
         
         void drawObject(SDL_RendererFlip flip);  
     
+        int getObjectState(){return currentFrame;}
+        
+        void setObjectState(int oState){currentFrame = oState;}
+
+    
 
 };
 

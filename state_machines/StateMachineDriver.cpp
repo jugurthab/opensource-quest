@@ -1,5 +1,7 @@
 #include "StateMachineDriver.h"
 
+StateMachineDriver* StateMachineDriver::stateMachineDriver = NULL;
+
 void StateMachineDriver::addState(GeneralStateMachine *statMachine){
     stateMachines.push_back(statMachine);
     stateMachines.back()->onEnterState();
@@ -48,5 +50,13 @@ void StateMachineDriver::renderMachine()
     if(!stateMachines.empty())
     {
         stateMachines.back()->renderState();
+    }
+}
+
+
+void StateMachineDriver::handleEventStateMachines(){
+    if(!stateMachines.empty())
+    {
+        stateMachines.back()->handleEvent();
     }
 }
