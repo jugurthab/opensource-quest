@@ -5,7 +5,7 @@ void TextObject::loadObject(std::string imgFileNameP, std::string imageIDP, int 
     imageID = imageIDP;
     currentFrame = currentFrameP;
     currentRow = currentRowP;  
-    SDL_Texture *texture = SmileFontManager::Instance()->loadFont(imgFileNameP, imageIDP, fontSizeL, fontColorL); 
+    SDL_Texture *texture = SmileFontManager::Instance()->loadFont(imgFileNameP, imageIDP, fontSizeL, fontColorL, textToBlitP); 
     SDL_QueryTexture(texture, NULL, NULL, &imgWidth, &imgHeight);
 
     imgXPos = (640 - imgWidth)/2;

@@ -19,7 +19,9 @@ class GameScene : public GeneralStateMachine{
     private:
         static const std::string gameStateID;
         MenuObject *startbutton;
-        TextObject *text;
+        TextObject *GameSceneText;
+
+        
 };
 
 

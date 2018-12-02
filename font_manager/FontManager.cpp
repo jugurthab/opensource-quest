@@ -9,14 +9,14 @@ FontManager::~FontManager(){
     TTF_Quit();
 }
 
-SDL_Texture* FontManager::loadFont(std::string FontFilename, std::string fontID, int fontSize, SDL_Color color){
+SDL_Texture* FontManager::loadFont(std::string FontFilename, std::string fontID, int fontSize, SDL_Color color, std::string textToBlit){
     TTF_Font *font = TTF_OpenFont(FontFilename.c_str(), fontSize);
 
     if(font==NULL){
         fprintf(stderr, "cannot load font %s", SDL_GetError());
     }
 
-    SDL_Surface *fontSurface = TTF_RenderText_Solid(font, "Welcome to OpenSource Quest", color);
+    SDL_Surface *fontSurface = TTF_RenderText_Solid(font, textToBlit.c_str(), color);
     
     SDL_Texture *fontTexture = SDL_CreateTextureFromSurface(SmileGameLogic::Instance()->getRenderer(), fontSurface);
 

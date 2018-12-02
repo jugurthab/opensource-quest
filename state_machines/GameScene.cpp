@@ -35,18 +35,20 @@ void GameScene::handleEvent(){
 }
 
 bool GameScene::onEnterState(){
+    GameSceneText = new TextObject(40, {255,0,255}, "Game scene");
+    GameSceneText->loadObject("assets/fonts/PTC55F.ttf", "gameScene", 20, 30, 200, 120, -1, -1);
+    
     std::cout << "onEnter GameScene" << std::endl;
     startbutton = new MenuObject();
     startbutton->loadObject("assets/animate.bmp", "animate", 250, 250, 128, 83, 0, 0);
-    text = new TextObject(40, {255,0,255});
-    text->loadObject("assets/fonts/PTC55F.ttf", "font", 20, 30, 200, 120, -1, -1);
+    
     SmileSoundHandler::Instance()->loadSound("assets/music/backMusic.mp3", "back", SOUND_MUSIC);
     SmileSoundHandler::Instance()->playBackMusic("back", -1);
 
 
 
     stateObjects.push_back(startbutton);
-    stateObjects.push_back(text);        
+    stateObjects.push_back(GameSceneText);        
 
     return true;
 }

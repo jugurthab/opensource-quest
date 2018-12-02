@@ -29,24 +29,59 @@ void GameOverScene::handleEvent(){
                 }
                 
             break;
+
+
+        case SDL_MOUSEMOTION:
+                if(event.motion.x > restartbutton->getImgXPos() && event.motion.x<restartbutton->getImgXPos()+restartbutton->getImgWidth() && event.motion.y > restartbutton->getImgYPos() && event.motion.y<restartbutton->getImgYPos()+restartbutton->getImgHeight())
+                    restartbutton->setObjectState(1);
+        
+                /*else if(event.motion.x > exitButton->getImgXPos() && event.motion.x < exitButton->getImgXPos()+ exitButton->getImgWidth() && event.motion.y > exitButton->getImgYPos() && event.motion.y< exitButton->getImgYPos()+ exitButton->getImgHeight())
+                    exitButton->setObjectState(1);*/
+
+                else{
+                    restartbutton->setObjectState(0);
+                  //  exitButton->setObjectState(0);   
+                 }       
+            break;
+
+        case SDL_MOUSEBUTTONDOWN:
+                if(event.button.x > restartbutton->getImgXPos() && event.button.x<restartbutton->getImgXPos()+restartbutton->getImgWidth() && event.button.y > restartbutton->getImgYPos() && event.button.y<restartbutton->getImgYPos()+restartbutton->getImgHeight()){
+                    restartbutton->setObjectState(2);
+                    goToMainMenu();
+                }
+
+/*                else if(event.button.x > exitButton->getImgXPos() && event.button.x < exitButton->getImgXPos()+ exitButton->getImgWidth() && event.button.y > exitButton->getImgYPos() && event.button.y < exitButton->getImgYPos()+ exitButton->getImgHeight()){
+                    exitButton->setObjectState(2);
+                    exitGame();
+                }*/
+            break;
+
+        default:
+            break;
+
     }
 }
 
 bool GameOverScene::onEnterState(){
     currentFra =0;
+    textGameOver = new TextObject(40,{0,255,0}, "Do not loose hope!");    
+    textGameOver->loadObject("assets/fonts/Deutsch.ttf", "gameoverfont", 20, 30, 200, 120, -1, -1);    
     std::cout << "onEnter GameOverScene" << std::endl;
-    startbutton = new MenuObject();
-    text = new TextObject(40,{0,255,0});    
-    text->loadObject("assets/fonts/PTC55F.ttf", "font", 20, 30, 200, 120, -1, -1);    
-    startbutton->loadObject("assets/gameover.bmp", "gameoveranimate", 250, 250, 190, 30, currentFra, 0);
+    gameOverButton = new MenuObject();
+        
+    restartbutton = new MenuObject();
+    restartbutton->loadObject("assets/restart_button.bmp", "restartButton", 220, 150, 200, 100, 0, -1);
+    
+    gameOverButton->loadObject("assets/gameover.bmp", "gameoveranimate", 230, 350, 190, 30, currentFra, 0);
         
     SmileSoundHandler::Instance()->loadSound("assets/music/game_over.mp3", "gameover", SOUND_MUSIC);
     SmileSoundHandler::Instance()->playBackMusic("gameover", 0);
 
 
 
-    stateObjects.push_back(startbutton);
-    stateObjects.push_back(text);        
+    stateObjects.push_back(gameOverButton);
+    stateObjects.push_back(restartbutton);
+    stateObjects.push_back(textGameOver);        
 
     return true;
 }
@@ -55,5 +90,11 @@ bool GameOverScene::onExitState(){
     return true;
 }
 
+void GameOverScene::goToMainMenu(){
+    SmileStateMachine::Instance()->switchState(new EntryMenu());   
+}
 
+void GameOverScene::exitGame(){
+    GameLogic::Instance()->cleanGameScene();
+}
 

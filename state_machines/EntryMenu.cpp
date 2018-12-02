@@ -26,8 +26,8 @@ void EntryMenu::handleEvent(){
         
         case SDL_KEYDOWN:
                 if(event.key.keysym.sym==SDLK_ESCAPE){
-                    std::cout << "hi" <<std::endl;
-                    SmileStateMachine::Instance()->switchState(new GameScene());
+                    
+                    exitGame();
                 }
                         
             break;
@@ -66,7 +66,7 @@ void EntryMenu::handleEvent(){
 
 bool EntryMenu::onEnterState(){
     std::cout << "onEnter Menu" << std::endl;
-    text = new TextObject(50, {0,0,255});
+    text = new TextObject(50, {0,0,255}, "Welcome to OpenSource Quest");
     text->loadObject("assets/fonts/Deutsch.ttf", "gameTitle", 35, 30, 200, 120, -1, -1);    
     playbutton = new MenuObject();
     exitButton = new MenuObject();

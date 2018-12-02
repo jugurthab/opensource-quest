@@ -4,6 +4,8 @@
 #include "GeneralStateMachine.h"
 #include "../game_objects/MenuObject.h"
 #include "../game_objects/TextObject.h"
+#include "EntryMenu.h"
+
 class GameOverScene : public GeneralStateMachine{
     public:
         void updateState();
@@ -15,10 +17,15 @@ class GameOverScene : public GeneralStateMachine{
         void handleEvent();
         std::string getStateName() const { return gameOverStateID; }
 
+        void goToMainMenu();
+
+        void exitGame();
+
     private:
         static const std::string gameOverStateID;
-        MenuObject *startbutton;
-        TextObject *text;
+        MenuObject *gameOverButton;
+        MenuObject *restartbutton;
+        TextObject *textGameOver;
 
         int currentFra;
 };
