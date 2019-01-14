@@ -15,8 +15,6 @@ Opensource quest is based on **SDL** and some of it's extensions :
 
 ## Compilation
 
-A makefile will be available soon but one can :
-
 > $ make
 
 > $ ./gamequest
