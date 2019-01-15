@@ -5,7 +5,7 @@ ifeq ($(DEBUG_ENABLED),yes)
 else
 	CFLAGS=-W -Wall
 endif
-LDFLAGS=`sdl2-config --cflags --libs` -lSDL2_mixer -lSDL2_ttf -std=c++11
+LDFLAGS=`sdl2-config --cflags --libs` -lSDL2_mixer -lSDL2_ttf -ltinyxml2 -std=c++11
 
 EXEC=gamequest
 SRC= $(wildcard *.cpp image_manager/*.cpp game_objects/*.cpp state_machines/*.cpp soundHandler/*.cpp font_manager/*.cpp)

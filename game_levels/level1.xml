@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<level>
+    <level_difficulty>1</level_difficulty>
+    <player id="juju.png">
+            <positionX>15</positionX>
+            <positionY>2</positionY>        
+    </player>
+
+    <enemies id="propriatary.png">    
+            <position x="2" y="2"></position>
+            <position x="5" y="12"></position>
+            <position x="6" y="10"></position>
+    </enemies>
+
+
+    <obstacles id="blocks.png">           
+            <position x="10" y="2"></position>
+            <position x="10" y="12"></position>
+            <position x="10" y="10"></position>
+    </obstacles>
+</level>
