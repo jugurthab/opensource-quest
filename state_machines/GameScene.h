@@ -5,12 +5,16 @@
 #include "GeneralStateMachine.h"
 #include "../game_objects/MenuObject.h"
 #include "../game_objects/TextObject.h"
+#include "../game_objects/PlayerUser.h"
+#include "../game_objects/Enemy.h"
 #include "GameOverScene.h"
-class GameScene : public GeneralStateMachine{
+
+class GameScene : public GeneralStateMachine
+{
     public:
         void updateState();
         void renderState();
-        
+
         bool onEnterState();
         bool onExitState();
 
@@ -23,9 +27,7 @@ class GameScene : public GeneralStateMachine{
         static const std::string gameStateID;
         MenuObject *startbutton;
         TextObject *GameSceneText;
-
         
 };
-
 
 #endif

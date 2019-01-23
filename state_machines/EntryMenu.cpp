@@ -72,7 +72,7 @@ bool EntryMenu::onEnterState(){
     exitButton = new MenuObject();
     playbutton->loadObject("assets/play_button.bmp", "playButton", 120, 150, 400, 100, 0, -1);
     exitButton->loadObject("assets/exit.bmp", "exitButton", 120, 290, 400, 100, 0, -1); 
-    SmileSoundHandler::Instance()->loadSound("assets/music/backMusic.mp3", "back", SOUND_MUSIC);
+    SmileSoundHandler::Instance()->loadSound("assets/music/bensound-birthofahero.mp3", "back", SOUND_MUSIC);
     SmileSoundHandler::Instance()->playBackMusic("back", -1);
 
 
