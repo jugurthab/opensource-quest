@@ -2,20 +2,20 @@
 <level>
     <level_difficulty>1</level_difficulty>
     <player id="rider.bmp">
-            <positionX>15</positionX>
-            <positionY>2</positionY>        
+            <positionX>400</positionX>
+            <positionY>400</positionY>        
     </player>
 
     <enemies id="propriatary.bmp">    
-            <position x="2" y="2"></position>
-            <position x="100" y="12"></position>
-            <position x="300" y="200"></position>
+            <position x="50" y="250"></position>
+            <position x="300" y="300"></position>
+            <position x="400" y="50"></position>
     </enemies>
 
 
-    <obstacles id="blocks.bmp">           
-            <position x="10" y="2"></position>
-            <position x="10" y="12"></position>
-            <position x="10" y="10"></position>
+    <obstacles id="Brick_Block.bmp">           
+            <position x="0" y="50"></position>
+            <position x="50" y="100"></position>
+            <position x="50" y="150"></position>
     </obstacles>
 </level>

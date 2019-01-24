@@ -62,7 +62,7 @@ bool GameScene::parseXMLLevel(){
                     posY = atoi(subEl->GetText());
                 std::cout << subEl->Value() << " : " << subEl->GetText() << std::endl;
             }
-            pUser->loadObject(pathToImg, "rider", posX, posY, 30, 21, 0, 0);
+            pUser->loadObject(pathToImg, "rider", posX, posY, 50, 50, 0, 0);
             stateObjects.push_back(pUser);
         }
 
@@ -82,16 +82,25 @@ bool GameScene::parseXMLLevel(){
                 posX = atoi(subEl->Attribute("x"));
                 posY = atoi(subEl->Attribute("y"));
                 std::cout << subEl->Value() << " : " << subEl->GetText() << std::endl;
-                enemy->loadObject(pathToImg, "enemy", posX, posY, 35, 35, 0, 0);
+                enemy->loadObject(pathToImg, "enemy", posX, posY, 50, 50, 0, 0);
                 stateObjects.push_back(enemy); 
             }         
   
         }
     
         else if(e->Value() == std::string("obstacles")){
+            int posX = 0, posY = 0;
+            std::string pathToImg = "assets/";
+            pathToImg += e->Attribute("id");
             std::cout << e->Attribute("id") << std::endl;
             for(tinyxml2::XMLElement* subEl = e->FirstChildElement(); subEl != NULL; subEl = subEl->NextSiblingElement()){
+                Block* block = new Block();
                 std::cout << subEl->Value() << " : " << subEl->Attribute("x") << subEl->Attribute("y") << std::endl;
+                posX = atoi(subEl->Attribute("x"));
+                posY = atoi(subEl->Attribute("y"));
+                std::cout << subEl->Value() << " : " << subEl->GetText() << std::endl;
+                block->loadObject(pathToImg, "block", posX, posY, 50, 50, 0, 0);
+                stateObjects.push_back(block);
             }  
         }
         std::cout << "------------------------------------" << std::endl;    
@@ -120,15 +129,10 @@ bool GameScene::onEnterState(){
     GameSceneText->loadObject("assets/fonts/PTC55F.ttf", "gameScene", 20, 30, 200, 120, -1, -1);
     
     std::cout << "onEnter GameScene" << std::endl;
-    startbutton = new MenuObject();
-    startbutton->loadObject("assets/animate.bmp", "animate", 250, 250, 128, 83, 0, 0);
     
     SmileSoundHandler::Instance()->loadSound("assets/music/backMusic.mp3", "back", SOUND_MUSIC);
     SmileSoundHandler::Instance()->playBackMusic("back", -1);
 
-
-
-    stateObjects.push_back(startbutton);
     stateObjects.push_back(GameSceneText);        
 
     return true;

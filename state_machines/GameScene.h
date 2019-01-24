@@ -7,6 +7,7 @@
 #include "../game_objects/TextObject.h"
 #include "../game_objects/PlayerUser.h"
 #include "../game_objects/Enemy.h"
+#include "../game_objects/Block.h"
 #include "GameOverScene.h"
 
 class GameScene : public GeneralStateMachine
@@ -25,7 +26,6 @@ class GameScene : public GeneralStateMachine
 
     private:
         static const std::string gameStateID;
-        MenuObject *startbutton;
         TextObject *GameSceneText;
         
 };
