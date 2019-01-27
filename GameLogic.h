@@ -4,8 +4,9 @@
 
 #include <iostream>
 #include <SDL.h>
-#include "game_objects/PlayerUser.h"  
 #include "state_machines/EntryMenu.h"
+#include "state_machines/GameScene.h"
+#include "state_machines/GameOverScene.h"
 #include "state_machines/StateMachineDriver.h"
 #include "HandleUserEvent.h"
 

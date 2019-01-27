@@ -51,7 +51,7 @@ bool GameScene::parseXMLLevel(){
         else if(e->Value() == std::string("player")){ 
             int posX = 0, posY = 0;
             std::string pathToImg = "assets/";
-            PlayerUser* pUser = new PlayerUser();
+            
             std::cout << e->Attribute("id") << std::endl;
             pathToImg += e->Attribute("id");
             for(tinyxml2::XMLElement* subEl = e->FirstChildElement(); subEl != NULL; subEl = subEl->NextSiblingElement()){
@@ -82,7 +82,7 @@ bool GameScene::parseXMLLevel(){
                 posX = atoi(subEl->Attribute("x"));
                 posY = atoi(subEl->Attribute("y"));
                 std::cout << subEl->Value() << " : " << subEl->GetText() << std::endl;
-                enemy->loadObject(pathToImg, "enemy", posX, posY, 50, 50, 0, 0);
+                enemy->loadObject(pathToImg, e->Attribute("id"), posX, posY, 50, 50, 0, 0);
                 stateObjects.push_back(enemy); 
             }         
   
@@ -114,16 +114,39 @@ void GameScene::handleEvent(){
     switch(event.type){
         
         case SDL_KEYDOWN:
-                if(event.key.keysym.sym==SDLK_ESCAPE){
-                    std::cout << "GameScene" <<std::endl;
-                    SmileStateMachine::Instance()->switchState(new GameOverScene());
+                switch(event.key.keysym.sym){
+                    case SDLK_ESCAPE:
+                        std::cout << "GameScene" <<std::endl;
+                        SmileStateMachine::Instance()->switchState(new GameOverScene());
+                    break;
+                    
+                    case SDLK_UP:
+                        if((pUser->getImgYPos()-50) >= 0) 
+                            pUser->setImgYPos(pUser->getImgYPos()-50);
+                    break;
+            
+                    case SDLK_DOWN:
+                        if((pUser->getImgYPos()+50) <= 480)
+                            pUser->setImgYPos(pUser->getImgYPos()+50);
+                    break;
+
+                    case SDLK_RIGHT:
+                        if((pUser->getImgXPos()+50) <= 640)
+                            pUser->setImgXPos(pUser->getImgXPos()+50);
+                    break;
+                    case SDLK_LEFT:
+                        if((pUser->getImgXPos()-50) >= 0)
+                            pUser->setImgXPos(pUser->getImgXPos()-50);
+                    break;
                 }
                 
-            break;
+                
+            
     }
 }
 
 bool GameScene::onEnterState(){
+    pUser = new PlayerUser();
     GameScene::parseXMLLevel();
     GameSceneText = new TextObject(40, {255,0,255}, "Game scene");
     GameSceneText->loadObject("assets/fonts/PTC55F.ttf", "gameScene", 20, 30, 200, 120, -1, -1);

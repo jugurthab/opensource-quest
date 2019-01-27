@@ -15,7 +15,6 @@ void Enemy::loadObject(std::string imgFileNameP, std::string imageIDP, int imgXP
 }
 
 void Enemy::updateObject(){
-    imgXPos-=1;
 }
 
 void Enemy::drawObject(SDL_RendererFlip flip){

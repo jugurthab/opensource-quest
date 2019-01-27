@@ -12,10 +12,20 @@
             <position x="400" y="50"></position>
     </enemies>
 
+    <enemies id="mac-icon.bmp">    
+            <position x="0" y="0"></position>
+            <position x="300" y="350"></position>
+            <position x="400" y="250"></position>
+    </enemies>
 
     <obstacles id="Brick_Block.bmp">           
             <position x="0" y="50"></position>
             <position x="50" y="100"></position>
             <position x="50" y="150"></position>
+            <position x="100" y="150"></position>
+            <position x="250" y="150"></position>
+            <position x="350" y="250"></position>
+            <position x="150" y="250"></position>
+            <position x="250" y="100"></position>
     </obstacles>
 </level>

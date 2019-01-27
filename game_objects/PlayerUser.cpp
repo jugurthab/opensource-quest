@@ -15,7 +15,6 @@ void PlayerUser::loadObject(std::string imgFileNameP, std::string imageIDP, int 
 }
 
 void PlayerUser::updateObject(){
-    imgXPos+=1;
 }
 
 void PlayerUser::drawObject(SDL_RendererFlip flip){

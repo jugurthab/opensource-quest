@@ -13,6 +13,9 @@ class GlobalGameObjectBlueprint {
 
         int getImgXPos(){return imgXPos;}
         int getImgYPos(){return imgYPos;}
+        void setImgXPos(int imgPosX){imgXPos = imgPosX;}
+        void setImgYPos(int imgPosY){imgYPos = imgPosY;}
+
 
         int getImgWidth(){return imgWidth;}
         int getImgHeight(){return imgHeight;}

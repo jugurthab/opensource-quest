@@ -1,8 +1,7 @@
-
+#include "GlobalGameObjectBlueprint.h"
+#include "../image_manager/ImgManager.h"
 #ifndef __PlayUser__
 #define __PlayUser__
-#include "GlobalGameObjectBlueprint.h"
- #include "../image_manager/ImgManager.h"
 class PlayerUser : public GlobalGameObjectBlueprint {
     public:
         PlayerUser(){};

@@ -14,10 +14,7 @@ void Block::loadObject(std::string imgFileNameP, std::string imageIDP, int imgXP
 
 }
 
-void Block::updateObject(){
-    
-    
-}
+void Block::updateObject(){}
 
 void Block::drawObject(SDL_RendererFlip flip){
     if(currentFrame <0 && currentRow<0)
