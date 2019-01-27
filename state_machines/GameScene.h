@@ -28,7 +28,12 @@ class GameScene : public GeneralStateMachine
         static const std::string gameStateID;
         TextObject *GameSceneText;
         PlayerUser *pUser;
-        
+        int playerUserCurrentFrame;
+        int playerUserCurrentRow;
+        long timeStart;
+        long timeEllapsedToUpdate;
+        int dx, dy;
+        int delta;
 };
 
 #endif

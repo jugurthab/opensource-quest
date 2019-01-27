@@ -2,17 +2,57 @@
 
 const std::string GameScene::gameStateID = "GAME_STATE";
 
-
 void GameScene::updateState(){
-    
-    for(int i=0; i<stateObjects.size();i++)
-        stateObjects[i]->updateObject();
-
-    
+    timeEllapsedToUpdate = SDL_GetTicks();
+    if(timeEllapsedToUpdate - timeStart > 100){
+        if(playerUserCurrentFrame==2)
+                playerUserCurrentFrame=-1;       
+        playerUserCurrentFrame += 1;
+        pUser->setCurrentFrame(playerUserCurrentFrame);
+        timeStart = timeEllapsedToUpdate;
         
+        if(dx!=0){
+            if(dx==50 || dx==-50){
+                dx=0;
+                playerUserCurrentRow = 0;
+            }
+            else{
+                dx += delta;
+                playerUserCurrentRow = 7;
+            }
+            pUser->setImgXPos(pUser->getImgXPos()+delta);
+            std::cout << dx << std::endl;        
+        }
+
+        if(dy!=0){
+            if(dy==50 || dy==-50){
+                dy=0;
+                playerUserCurrentRow = 0;
+            }
+            else{
+                dy += delta;
+                if (dy<0)
+                    playerUserCurrentRow = 2;
+                else
+                    playerUserCurrentRow = 1;
+            }
+            pUser->setImgYPos(pUser->getImgYPos()+delta);
+        }        
+
+    }
+    pUser->setCurrentRow(playerUserCurrentRow);
+        for(int i=0; i<stateObjects.size();i++){
+             stateObjects[i]->updateObject();
+             if(stateObjects[i]->getObjectType() == std::string("enemies")){
+                  if((pUser->getImgYPos()) == stateObjects[i]->getImgYPos() && pUser->getImgXPos() == stateObjects[i]->getImgXPos()){
+                        playerUserCurrentRow = 8;
+                        
+                  } 
+            }
+        }     
 }
-void GameScene::renderState(){
-    
+
+void GameScene::renderState(){    
     for(int i=0; i<stateObjects.size();i++)
         stateObjects[i]->drawObject(SDL_FLIP_NONE);
 
@@ -62,7 +102,7 @@ bool GameScene::parseXMLLevel(){
                     posY = atoi(subEl->GetText());
                 std::cout << subEl->Value() << " : " << subEl->GetText() << std::endl;
             }
-            pUser->loadObject(pathToImg, "rider", posX, posY, 50, 50, 0, 0);
+            pUser->loadObject(pathToImg, "linux", posX, posY, 50, 50, 0, 7);
             stateObjects.push_back(pUser);
         }
 
@@ -75,14 +115,15 @@ bool GameScene::parseXMLLevel(){
             pathToImg += e->Attribute("id");
             for(tinyxml2::XMLElement* subEl = e->FirstChildElement(); subEl != NULL; subEl = subEl->NextSiblingElement()){
                 Enemy* enemy = new Enemy();
-                std::cout << subEl->Value() << " : " << subEl->Attribute("x") << subEl->Attribute("y") << std::endl;
+                //std::cout << subEl->Value() << " : " << subEl->Attribute("x") << subEl->Attribute("y") << std::endl;
 
                 
                 
                 posX = atoi(subEl->Attribute("x"));
                 posY = atoi(subEl->Attribute("y"));
-                std::cout << subEl->Value() << " : " << subEl->GetText() << std::endl;
+                //std::cout << subEl->Value() << " : " << subEl->GetText() << std::endl;
                 enemy->loadObject(pathToImg, e->Attribute("id"), posX, posY, 50, 50, 0, 0);
+                enemy->setObjectType("enemies");
                 stateObjects.push_back(enemy); 
             }         
   
@@ -95,11 +136,12 @@ bool GameScene::parseXMLLevel(){
             std::cout << e->Attribute("id") << std::endl;
             for(tinyxml2::XMLElement* subEl = e->FirstChildElement(); subEl != NULL; subEl = subEl->NextSiblingElement()){
                 Block* block = new Block();
-                std::cout << subEl->Value() << " : " << subEl->Attribute("x") << subEl->Attribute("y") << std::endl;
+                //std::cout << subEl->Value() << " : " << subEl->Attribute("x") << subEl->Attribute("y") << std::endl;
                 posX = atoi(subEl->Attribute("x"));
                 posY = atoi(subEl->Attribute("y"));
-                std::cout << subEl->Value() << " : " << subEl->GetText() << std::endl;
+                //std::cout << subEl->Value() << " : " << subEl->GetText() << std::endl;
                 block->loadObject(pathToImg, "block", posX, posY, 50, 50, 0, 0);
+                block->setObjectType("obstacles");
                 stateObjects.push_back(block);
             }  
         }
@@ -121,22 +163,58 @@ void GameScene::handleEvent(){
                     break;
                     
                     case SDLK_UP:
-                        if((pUser->getImgYPos()-50) >= 0) 
-                            pUser->setImgYPos(pUser->getImgYPos()-50);
+                        if((pUser->getImgYPos()-50) >= 0 && dy==0 && dx==0){
+                            for(int i=0; i<stateObjects.size();i++){
+                                if(stateObjects[i]->getObjectType() ==std::string("obstacles")){
+                                    if((pUser->getImgYPos()-50) == stateObjects[i]->getImgYPos() && pUser->getImgXPos() == stateObjects[i]->getImgXPos())
+                                        return;
+                                }
+                            }
+                            delta = -10; dy= -10;
+                            //pUser->setImgYPos(pUser->getImgYPos()-dy);
+                        }
+                        playerUserCurrentRow = 2;
                     break;
             
                     case SDLK_DOWN:
-                        if((pUser->getImgYPos()+50) <= 480)
-                            pUser->setImgYPos(pUser->getImgYPos()+50);
+                        if((pUser->getImgYPos()+50) <= 480 && dy==0 && dx==0){
+                            for(int i=0; i<stateObjects.size();i++){
+                                if(stateObjects[i]->getObjectType() ==std::string("obstacles")){
+                                    if((pUser->getImgYPos()+50) == stateObjects[i]->getImgYPos() && pUser->getImgXPos() == stateObjects[i]->getImgXPos())
+                                        return;
+                                    }
+                                }
+                            delta = 10; dy= 10;
+                            //pUser->setImgYPos(pUser->getImgYPos()+dy);
+                    }                    
+                    playerUserCurrentRow = 1;
                     break;
 
                     case SDLK_RIGHT:
-                        if((pUser->getImgXPos()+50) <= 640)
-                            pUser->setImgXPos(pUser->getImgXPos()+50);
+                        if((pUser->getImgXPos()+50) <= 640 && dx==0 && dy==0){
+                            for(int i=0; i<stateObjects.size();i++){
+                                if(stateObjects[i]->getObjectType() ==std::string("obstacles")){
+                                    if((pUser->getImgXPos()+50) == stateObjects[i]->getImgXPos() && pUser->getImgYPos() == stateObjects[i]->getImgYPos())
+                                        return;
+                                    }
+                                }   
+                            delta = 10; dx= 10;
+                            //pUser->setImgXPos(pUser->getImgXPos()+50);
+                        }
+                        pUser->setFlipDirection(SDL_FLIP_NONE);
                     break;
                     case SDLK_LEFT:
-                        if((pUser->getImgXPos()-50) >= 0)
-                            pUser->setImgXPos(pUser->getImgXPos()-50);
+                        if((pUser->getImgXPos()-50) >= 0 && dx==0 && dy==0){
+                            for(int i=0; i<stateObjects.size();i++){
+                                if(stateObjects[i]->getObjectType() ==std::string("obstacles")){
+                                    if((pUser->getImgXPos()-50) == stateObjects[i]->getImgXPos() && pUser->getImgYPos() == stateObjects[i]->getImgYPos())
+                                        return;
+                                    }
+                                }
+                            delta = -10; dx = -10;
+                            //pUser->setImgXPos(pUser->getImgXPos()-50);
+                        }
+                        pUser->setFlipDirection(SDL_FLIP_HORIZONTAL);
                     break;
                 }
                 
@@ -146,6 +224,7 @@ void GameScene::handleEvent(){
 }
 
 bool GameScene::onEnterState(){
+    dx = dy = delta = 0;
     pUser = new PlayerUser();
     GameScene::parseXMLLevel();
     GameSceneText = new TextObject(40, {255,0,255}, "Game scene");
@@ -162,8 +241,7 @@ bool GameScene::onEnterState(){
 }
 bool GameScene::onExitState(){
     std::cout << "onExit GameScene" << std::endl;
+    stateObjects.clear();
     return true;
 }
-
-
 

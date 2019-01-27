@@ -17,7 +17,7 @@ void PlayerUser::loadObject(std::string imgFileNameP, std::string imageIDP, int 
 void PlayerUser::updateObject(){
 }
 
-void PlayerUser::drawObject(SDL_RendererFlip flip){
+void PlayerUser::drawObject(SDL_RendererFlip flipUser){
     if(currentFrame <0 && currentRow<0)
         gameImgManager::Instance()->drawImage(imageID, imgXPos, imgYPos, imgWidth, imgHeight, flip);
     else

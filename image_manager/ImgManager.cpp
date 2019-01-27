@@ -41,7 +41,7 @@ void ImgManager::drawSpriteAnimation(std::string imageID, int imgXPos, int imgYP
     SDL_Rect srcRect, destRect;
     srcRect.x = currentFrame * imgWidth;
 
-    srcRect.y = currentRow;
+    srcRect.y = currentRow * imgHeight;
 
     srcRect.w = destRect.w = imgWidth;
     srcRect.h = destRect.h = imgHeight;

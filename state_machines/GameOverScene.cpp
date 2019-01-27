@@ -65,19 +65,17 @@ void GameOverScene::handleEvent(){
 bool GameOverScene::onEnterState(){
     currentFra =0;
     textGameOver = new TextObject(40,{0,255,0}, "Do not loose hope!");    
-    textGameOver->loadObject("assets/fonts/Deutsch.ttf", "gameoverfont", 20, 30, 200, 120, -1, -1);    
+    textGameOver->loadObject("assets/fonts/Deutsch.ttf", "gameoverfont", 20, 30, 200, 120, -1, -1);
     std::cout << "onEnter GameOverScene" << std::endl;
     gameOverButton = new MenuObject();
         
     restartbutton = new MenuObject();
-    restartbutton->loadObject("assets/restart_button.bmp", "restartButton", 220, 150, 200, 100, 0, -1);
+    restartbutton->loadObject("assets/restart_button.bmp", "restartButton", 220, 150, 200, 100, 0, 0);
     
     gameOverButton->loadObject("assets/gameover.bmp", "gameoveranimate", 230, 350, 190, 30, currentFra, 0);
         
     SmileSoundHandler::Instance()->loadSound("assets/music/game_over.mp3", "gameover", SOUND_MUSIC);
     SmileSoundHandler::Instance()->playBackMusic("gameover", 0);
-
-
 
     stateObjects.push_back(gameOverButton);
     stateObjects.push_back(restartbutton);
@@ -87,6 +85,7 @@ bool GameOverScene::onEnterState(){
 }
 bool GameOverScene::onExitState(){
     std::cout << "onExit GameOverScene" << std::endl;
+    stateObjects.clear();
     return true;
 }
 

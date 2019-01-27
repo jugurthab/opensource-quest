@@ -70,8 +70,8 @@ bool EntryMenu::onEnterState(){
     text->loadObject("assets/fonts/Deutsch.ttf", "gameTitle", 35, 30, 200, 120, -1, -1);    
     playbutton = new MenuObject();
     exitButton = new MenuObject();
-    playbutton->loadObject("assets/play_button.bmp", "playButton", 120, 150, 400, 100, 0, -1);
-    exitButton->loadObject("assets/exit.bmp", "exitButton", 120, 290, 400, 100, 0, -1); 
+    playbutton->loadObject("assets/play_button.bmp", "playButton", 120, 150, 400, 100, 0, 0);
+    exitButton->loadObject("assets/exit.bmp", "exitButton", 120, 290, 400, 100, 0, 0); 
     SmileSoundHandler::Instance()->loadSound("assets/music/bensound-birthofahero.mp3", "back", SOUND_MUSIC);
     SmileSoundHandler::Instance()->playBackMusic("back", -1);
 
@@ -95,4 +95,5 @@ void EntryMenu::startGame(){
 
 void EntryMenu::exitGame(){
     GameLogic::Instance()->cleanGameScene();
+    stateObjects.clear();
 }

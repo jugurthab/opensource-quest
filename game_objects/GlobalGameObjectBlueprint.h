@@ -12,13 +12,23 @@ class GlobalGameObjectBlueprint {
         virtual void drawObject(SDL_RendererFlip flip)=0;
 
         int getImgXPos(){return imgXPos;}
-        int getImgYPos(){return imgYPos;}
         void setImgXPos(int imgPosX){imgXPos = imgPosX;}
+        int getImgYPos(){return imgYPos;}
         void setImgYPos(int imgPosY){imgYPos = imgPosY;}
+
+        std::string getObjectType(){return objectType;}
+        void setObjectType(std::string objectTypeUser){objectType = objectTypeUser;}
 
 
         int getImgWidth(){return imgWidth;}
         int getImgHeight(){return imgHeight;}
+
+        int getCurrentFrame(){return currentFrame;}
+        void setCurrentFrame(int currentFrameUser){currentFrame = currentFrameUser;}
+        int getCurrentRow(){return currentRow;}
+        void setCurrentRow(int currentRowUser){currentRow = currentRowUser;}
+
+        void setFlipDirection(SDL_RendererFlip flipUser){flip = flipUser;}
     protected:
 
         int imgXPos;
@@ -30,6 +40,8 @@ class GlobalGameObjectBlueprint {
         std::string imageID;
         int currentFrame;
         int currentRow;
+        std::string objectType;
+        SDL_RendererFlip flip;
 };
 
 

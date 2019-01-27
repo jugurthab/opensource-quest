@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <level>
     <level_difficulty>1</level_difficulty>
-    <player id="rider.bmp">
-            <positionX>400</positionX>
-            <positionY>400</positionY>        
-    </player>
-
     <enemies id="propriatary.bmp">    
             <position x="50" y="250"></position>
             <position x="300" y="300"></position>
@@ -28,4 +23,9 @@
             <position x="150" y="250"></position>
             <position x="250" y="100"></position>
     </obstacles>
+
+    <player id="linux.bmp">
+            <positionX>400</positionX>
+            <positionY>400</positionY>        
+    </player>
 </level>
