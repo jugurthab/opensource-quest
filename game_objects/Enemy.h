@@ -11,8 +11,14 @@ class Enemy : public GlobalGameObjectBlueprint {
         void updateObject();
         
         void drawObject(SDL_RendererFlip flip);  
-    
 
+        void setdX(int dxUser){dx = dxUser;}
+        int getdX(){return dx;}
+        void setdY(int dyUser){dy = dyUser;}
+        int getdY(){return dy;}
+    private:
+        int dx, dy; 
+        
 };
 
 

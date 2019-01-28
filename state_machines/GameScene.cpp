@@ -6,11 +6,11 @@ void GameScene::updateState(){
     timeEllapsedToUpdate = SDL_GetTicks();
     if(timeEllapsedToUpdate - timeStart > 100){
         if(playerUserCurrentFrame==2)
-                playerUserCurrentFrame=-1;       
+                playerUserCurrentFrame=-1;
         playerUserCurrentFrame += 1;
         pUser->setCurrentFrame(playerUserCurrentFrame);
         timeStart = timeEllapsedToUpdate;
-        
+
         if(dx!=0){
             if(dx==50 || dx==-50){
                 dx=0;
@@ -37,8 +37,7 @@ void GameScene::updateState(){
                     playerUserCurrentRow = 1;
             }
             pUser->setImgYPos(pUser->getImgYPos()+delta);
-        }        
-
+        }
     }
     pUser->setCurrentRow(playerUserCurrentRow);
         for(int i=0; i<stateObjects.size();i++){
@@ -47,7 +46,48 @@ void GameScene::updateState(){
                   if((pUser->getImgYPos()) == stateObjects[i]->getImgYPos() && pUser->getImgXPos() == stateObjects[i]->getImgXPos()){
                         playerUserCurrentRow = 8;
                         
-                  } 
+                  }
+                if((stateObjects[i]->getImgXPos()+50) > 640){
+                    static_cast<Enemy*>(stateObjects[i])->setdX(-10);  
+                } else if((stateObjects[i]->getImgXPos()-50) < 0){
+                    static_cast<Enemy*>(stateObjects[i])->setdX(10);
+                } else {
+                    static_cast<Enemy*>(stateObjects[i])->setdX(10);
+                }
+
+                if((stateObjects[i]->getImgYPos()+50) > 480){
+                    static_cast<Enemy*>(stateObjects[i])->setdY(-10);  
+                } else if((stateObjects[i]->getImgYPos()-50) < 0){
+                    static_cast<Enemy*>(stateObjects[i])->setdY(10);
+                } else{
+                    static_cast<Enemy*>(stateObjects[i])->setdY(10);
+                }
+
+                stateObjects[i]->setImgXPos(stateObjects[i]->getImgXPos()+ static_cast<Enemy*>(stateObjects[i])->getdX());
+                stateObjects[i]->setImgYPos(stateObjects[i]->getImgYPos()+static_cast<Enemy*>(stateObjects[i])->getdY());
+                
+            }
+
+            else if(stateObjects[i]->getObjectType() == std::string("boy")){
+                if((pUser->getImgYPos()) == stateObjects[i]->getImgYPos() && pUser->getImgXPos() == stateObjects[i]->getImgXPos()){
+                    stateObjects[i]->setCurrentRow(0);
+                    
+                }
+                stateObjects[i]->setCurrentFrame(playerUserCurrentFrame);
+            }
+            else if(stateObjects[i]->getObjectType() == std::string("girl")){
+                if((pUser->getImgYPos()) == stateObjects[i]->getImgYPos() && pUser->getImgXPos() == stateObjects[i]->getImgXPos()){
+                    stateObjects[i]->setCurrentRow(0);
+                    
+                }
+                stateObjects[i]->setCurrentFrame(3+playerUserCurrentFrame);
+            }
+            else if(stateObjects[i]->getObjectType() == std::string("boyGreen")){
+                if((pUser->getImgYPos()) == stateObjects[i]->getImgYPos() && pUser->getImgXPos() == stateObjects[i]->getImgXPos()){
+                    stateObjects[i]->setCurrentRow(0);
+
+                }
+                    stateObjects[i]->setCurrentFrame(6+playerUserCurrentFrame);
             }
         }     
 }
@@ -145,6 +185,23 @@ bool GameScene::parseXMLLevel(){
                 stateObjects.push_back(block);
             }  
         }
+
+        else if(e->Value() == std::string("users")){
+            int posX = 0, posY = 0;
+            std::string pathToImg = "assets/";
+            pathToImg += e->Attribute("id");
+            std::cout << e->Attribute("id") << std::endl;
+            for(tinyxml2::XMLElement* subEl = e->FirstChildElement(); subEl != NULL; subEl = subEl->NextSiblingElement()){
+                Users* user = new Users();
+                //std::cout << subEl->Value() << " : " << subEl->Attribute("x") << subEl->Attribute("y") << std::endl;
+                posX = atoi(subEl->Attribute("x"));
+                posY = atoi(subEl->Attribute("y"));
+                //std::cout << subEl->Value() << " : " << subEl->GetText() << std::endl;
+                user->loadObject(pathToImg, "users", posX, posY, 50, 50, atoi(subEl->Attribute("currentFrame")), atoi(subEl->Attribute("currentRow")));
+                user->setObjectType(subEl->Attribute("type"));
+                stateObjects.push_back(user);
+            }  
+        }
         std::cout << "------------------------------------" << std::endl;    
     } 
 }
@@ -216,10 +273,7 @@ void GameScene::handleEvent(){
                         }
                         pUser->setFlipDirection(SDL_FLIP_HORIZONTAL);
                     break;
-                }
-                
-                
-            
+                }          
     }
 }
 

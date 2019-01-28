@@ -9,7 +9,7 @@ bool GameLogic::initGameLogic(){
         return false;
     }
 
-    smileWindow = SDL_CreateWindow("Smile Quest To openSource World", 12, 12, 640, 480 , SDL_WINDOW_SHOWN);
+    smileWindow = SDL_CreateWindow("OpenSource Quest", 12, 12, 640, 480 , SDL_WINDOW_SHOWN);
 
     if(smileWindow==NULL){
         fprintf(stderr, "Cannot Create Window %s\n", SDL_GetError());

@@ -1,6 +1,6 @@
-#include "Enemy.h"
+#include "Users.h"
 
-void Enemy::loadObject(std::string imgFileNameP, std::string imageIDP, int imgXPosP, int imgYPosP, int imgWidthP, int imgHeightP, int currentFrameP, int currentRowP){
+void Users::loadObject(std::string imgFileNameP, std::string imageIDP, int imgXPosP, int imgYPosP, int imgWidthP, int imgHeightP, int currentFrameP, int currentRowP){
     imgXPos = imgXPosP;
     imgYPos = imgYPosP;
 
@@ -11,14 +11,13 @@ void Enemy::loadObject(std::string imgFileNameP, std::string imageIDP, int imgXP
     currentFrame = currentFrameP;
     currentRow = currentRowP;    
     gameImgManager::Instance()->loadImage(imgFileNameP, imageID);
-    dx = dy = 0;
 
 }
 
-void Enemy::updateObject(){
+void Users::updateObject(){
 }
 
-void Enemy::drawObject(SDL_RendererFlip flip){
+void Users::drawObject(SDL_RendererFlip flip){
     if(currentFrame <0 && currentRow<0)
         gameImgManager::Instance()->drawImage(imageID, imgXPos, imgYPos, imgWidth, imgHeight, flip);
     else

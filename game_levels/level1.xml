@@ -13,6 +13,12 @@
             <position x="400" y="250"></position>
     </enemies>
 
+    <users id="users.bmp">    
+            <position x="0" y="150" currentFrame="0" currentRow="4" type="boy"></position>
+            <position x="500" y="400" currentFrame="3" currentRow="4" type="girl"></position>
+            <position x="250" y="400" currentFrame="6" currentRow="4" type="boyGreen"></position>
+    </users>
+
     <obstacles id="Brick_Block.bmp">           
             <position x="0" y="50"></position>
             <position x="50" y="100"></position>
