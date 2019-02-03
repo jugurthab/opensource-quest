@@ -10,7 +10,8 @@ class Enemy : public GlobalGameObjectBlueprint {
 
         void updateObject();
         
-        void drawObject(SDL_RendererFlip flip);  
+        void drawObject(SDL_RendererFlip flip);
+        void generateDisplacePosition();        
 
         void setdX(int dxUser){dx = dxUser;}
         int getdX(){return dx;}

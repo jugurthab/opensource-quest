@@ -1,4 +1,6 @@
 #include "GameScene.h"
+#include <cstdlib>
+#include <ctime>
 
 const std::string GameScene::gameStateID = "GAME_STATE";
 
@@ -38,33 +40,64 @@ void GameScene::updateState(){
             }
             pUser->setImgYPos(pUser->getImgYPos()+delta);
         }
-    }
-    pUser->setCurrentRow(playerUserCurrentRow);
-        for(int i=0; i<stateObjects.size();i++){
+
+            for(int i=0; i<stateObjects.size();i++){
              stateObjects[i]->updateObject();
              if(stateObjects[i]->getObjectType() == std::string("enemies")){
-                  if((pUser->getImgYPos()) == stateObjects[i]->getImgYPos() && pUser->getImgXPos() == stateObjects[i]->getImgXPos()){
+                if((pUser->getImgYPos()) == stateObjects[i]->getImgYPos() && pUser->getImgXPos() == stateObjects[i]->getImgXPos()){
                         playerUserCurrentRow = 8;
-                        
-                  }
-                if((stateObjects[i]->getImgXPos()+50) > 640){
-                    static_cast<Enemy*>(stateObjects[i])->setdX(-10);  
-                } else if((stateObjects[i]->getImgXPos()-50) < 0){
-                    static_cast<Enemy*>(stateObjects[i])->setdX(10);
-                } else {
-                    static_cast<Enemy*>(stateObjects[i])->setdX(10);
                 }
 
-                if((stateObjects[i]->getImgYPos()+50) > 480){
+                if(stateObjects[i]->getImgXPos()%50 ==0){
+                    static_cast<Enemy*>(stateObjects[i])->setdX(0);
+                }
+                if(stateObjects[i]->getImgYPos()%50 ==0){
+                    static_cast<Enemy*>(stateObjects[i])->setdY(0);
+                }
+                if(static_cast<Enemy*>(stateObjects[i])->getdX()==0 && static_cast<Enemy*>(stateObjects[i])->getdY()==0){
+                    directionChooser = rand() % 100;
+                    //std::cout << directionChooser << std::endl;
+                    if(directionChooser<50){
+                        directionChooser = rand() % 100;
+                        if(directionChooser < 50)
+                            static_cast<Enemy*>(stateObjects[i])->setdX(10);
+                        else
+                            static_cast<Enemy*>(stateObjects[i])->setdX(-10);
+
+                    } else{
+                        directionChooser = rand() % 100;
+                        if(directionChooser < 50)
+                            static_cast<Enemy*>(stateObjects[i])->setdY(10);
+                        else
+                            static_cast<Enemy*>(stateObjects[i])->setdY(-10);
+                    }
+                }
+
+                if((stateObjects[i]->getImgXPos()+50) < 640 && static_cast<Enemy*>(stateObjects[i])->getdX()>0){
+                    stateObjects[i]->setImgXPos(stateObjects[i]->getImgXPos()+ static_cast<Enemy*>(stateObjects[i])->getdX());  
+                }
+                 else if((stateObjects[i]->getImgXPos()-50) >= 0 && static_cast<Enemy*>(stateObjects[i])->getdX() < 0){
+                    stateObjects[i]->setImgXPos(stateObjects[i]->getImgXPos()+ static_cast<Enemy*>(stateObjects[i])->getdX());
+                }
+
+                
+                else if((stateObjects[i]->getImgYPos()+50) < 480 && static_cast<Enemy*>(stateObjects[i])->getdY()>0){
+                    stateObjects[i]->setImgYPos(stateObjects[i]->getImgYPos()+ static_cast<Enemy*>(stateObjects[i])->getdY());  
+                }
+                else if((stateObjects[i]->getImgYPos()-50) >= 0 && static_cast<Enemy*>(stateObjects[i])->getdY()< 0){
+                    stateObjects[i]->setImgYPos(stateObjects[i]->getImgYPos()+ static_cast<Enemy*>(stateObjects[i])->getdY());
+                }
+
+                /*if((stateObjects[i]->getImgYPos()+50) > 480){
                     static_cast<Enemy*>(stateObjects[i])->setdY(-10);  
                 } else if((stateObjects[i]->getImgYPos()-50) < 0){
                     static_cast<Enemy*>(stateObjects[i])->setdY(10);
                 } else{
                     static_cast<Enemy*>(stateObjects[i])->setdY(10);
-                }
+                }*/
 
-                stateObjects[i]->setImgXPos(stateObjects[i]->getImgXPos()+ static_cast<Enemy*>(stateObjects[i])->getdX());
-                stateObjects[i]->setImgYPos(stateObjects[i]->getImgYPos()+static_cast<Enemy*>(stateObjects[i])->getdY());
+                
+
                 
             }
 
@@ -90,6 +123,10 @@ void GameScene::updateState(){
                     stateObjects[i]->setCurrentFrame(6+playerUserCurrentFrame);
             }
         }     
+
+    }
+    pUser->setCurrentRow(playerUserCurrentRow);
+
 }
 
 void GameScene::renderState(){    
@@ -278,6 +315,7 @@ void GameScene::handleEvent(){
 }
 
 bool GameScene::onEnterState(){
+    srand(time(0));
     dx = dy = delta = 0;
     pUser = new PlayerUser();
     GameScene::parseXMLLevel();

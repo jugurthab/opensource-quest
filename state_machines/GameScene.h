@@ -35,6 +35,7 @@ class GameScene : public GeneralStateMachine
         long timeEllapsedToUpdate;
         int dx, dy;
         int delta;
+        int directionChooser;
 };
 
 #endif
