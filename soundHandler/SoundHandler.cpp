@@ -36,6 +36,20 @@ bool SoundHandler::loadSound(std::string soundFileName, std::string soundID,choi
      return true;    
 }
 
+void SoundHandler::clearMapSoundRessources(){
+    for (std::map<std::string, Mix_Music*>::iterator it = m_music.begin() ; it != m_music.end(); ++it)
+    {
+        m_music.erase(it);
+    } 
+    m_music.clear();
+
+    for (std::map<std::string, Mix_Chunk*>::iterator it = m_chunk.begin() ; it != m_chunk.end(); ++it)
+    {
+        m_chunk.erase(it);
+    } 
+    m_chunk.clear();
+}
+
 void SoundHandler::playBackMusic(std::string soundID, int looping){
     Mix_PlayMusic(m_music[soundID], looping);   
 }

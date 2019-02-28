@@ -24,6 +24,7 @@ class GameScene : public GeneralStateMachine
 
         bool parseXMLLevel();
         std::string getStateName() const { return gameStateID; }
+        void clearObjectsFromScene();
 
     private:
         static const std::string gameStateID;

@@ -85,7 +85,7 @@ bool GameOverScene::onEnterState(){
 }
 bool GameOverScene::onExitState(){
     std::cout << "onExit GameOverScene" << std::endl;
-    stateObjects.clear();
+    clearObjectsFromScene();
     return true;
 }
 
@@ -95,5 +95,15 @@ void GameOverScene::goToMainMenu(){
 
 void GameOverScene::exitGame(){
     GameLogic::Instance()->cleanGameScene();
+}
+
+void GameOverScene::clearObjectsFromScene(){
+    for (std::vector<GlobalGameObjectBlueprint*>::iterator it = stateObjects.begin() ; it != stateObjects.end(); ++it)
+    {
+        delete (*it);
+    } 
+    stateObjects.clear(); 
+    gameImgManager::Instance()->clearMapTextureObjects(); 
+    SmileSoundHandler::Instance()->clearMapSoundRessources();
 }
 

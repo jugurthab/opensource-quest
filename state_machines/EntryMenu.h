@@ -26,6 +26,7 @@ class EntryMenu : public GeneralStateMachine{
         void startGame();
 
         void exitGame();
+        void clearObjectsFromScene();
 
     private:
         static const std::string menuStateID;

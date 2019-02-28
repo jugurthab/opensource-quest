@@ -26,7 +26,7 @@ class SoundHandler{
         void playBackMusic(std::string soundID, int looping);
 
         void playEffectMusic(std::string soundID, int looping);
-
+        void clearMapSoundRessources();
 
     private:
         static SoundHandler *soundManager;

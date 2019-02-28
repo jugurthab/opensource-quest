@@ -17,6 +17,7 @@ class GeneralStateMachine{
 
         virtual void handleEvent() = 0;
         virtual std::string getStateName() const = 0;
+        virtual void clearObjectsFromScene() = 0;
 
     protected:
 

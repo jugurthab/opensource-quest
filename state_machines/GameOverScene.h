@@ -20,6 +20,7 @@ class GameOverScene : public GeneralStateMachine{
         void goToMainMenu();
 
         void exitGame();
+        void clearObjectsFromScene();
 
     private:
         static const std::string gameOverStateID;

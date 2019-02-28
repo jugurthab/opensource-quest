@@ -327,13 +327,26 @@ bool GameScene::onEnterState(){
     SmileSoundHandler::Instance()->loadSound("assets/music/backMusic.mp3", "back", SOUND_MUSIC);
     SmileSoundHandler::Instance()->playBackMusic("back", -1);
 
-    stateObjects.push_back(GameSceneText);        
+    stateObjects.push_back(GameSceneText); 
+    std::cout << "GameScene - number of objects is " << stateObjects.size() << std::endl;       
 
     return true;
 }
 bool GameScene::onExitState(){
     std::cout << "onExit GameScene" << std::endl;
-    stateObjects.clear();
+    clearObjectsFromScene();
+    std::cout << "GameScene exit - number of objects is " << stateObjects.size() << std::endl;       
+
     return true;
+}
+
+void GameScene::clearObjectsFromScene(){
+    for (std::vector<GlobalGameObjectBlueprint*>::iterator it = stateObjects.begin() ; it != stateObjects.end(); ++it)
+    {
+        delete (*it);
+    } 
+    stateObjects.clear(); 
+    gameImgManager::Instance()->clearMapTextureObjects(); 
+    SmileSoundHandler::Instance()->clearMapSoundRessources();
 }
 

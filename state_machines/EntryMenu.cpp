@@ -75,16 +75,16 @@ bool EntryMenu::onEnterState(){
     SmileSoundHandler::Instance()->loadSound("assets/music/bensound-birthofahero.mp3", "back", SOUND_MUSIC);
     SmileSoundHandler::Instance()->playBackMusic("back", -1);
 
-
-
     stateObjects.push_back(playbutton);
     stateObjects.push_back(exitButton);
     stateObjects.push_back(text);        
-
+    std::cout << "Menu - number of objects is " << stateObjects.size() << std::endl;
     return true;
 }
 bool EntryMenu::onExitState(){
     std::cout << "onExit Menu" << std::endl;
+    clearObjectsFromScene();
+std::cout << "Menu exit - number of objects is " << stateObjects.size() << std::endl;
     return true;
 }
 
@@ -96,4 +96,15 @@ void EntryMenu::startGame(){
 void EntryMenu::exitGame(){
     GameLogic::Instance()->cleanGameScene();
     stateObjects.clear();
+    clearObjectsFromScene();
+}
+
+void EntryMenu::clearObjectsFromScene(){
+    for (std::vector<GlobalGameObjectBlueprint*>::iterator it = stateObjects.begin() ; it != stateObjects.end(); ++it)
+    {
+        delete (*it);
+    } 
+    stateObjects.clear(); 
+    gameImgManager::Instance()->clearMapTextureObjects(); 
+    SmileSoundHandler::Instance()->clearMapSoundRessources();
 }
