@@ -24,7 +24,7 @@ class ImgManager{
         void addTexture(SDL_Texture *texture, std::string textureID){
             imgLoaded[textureID] = texture;
         }
-        
+        void eraseImg(std::string imageID);
         void clearMapTextureObjects();
 
     private:

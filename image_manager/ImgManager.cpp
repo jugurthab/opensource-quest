@@ -52,11 +52,15 @@ void ImgManager::drawSpriteAnimation(std::string imageID, int imgXPos, int imgYP
     SDL_RenderCopyEx(SmileGameLogic::Instance()->getRenderer(), imgLoaded[imageID], &srcRect, &destRect, 0, 0, flip);
 }
 
+void ImgManager::eraseImg(std::string imageID){
+    imgLoaded.erase(imageID);
+}
+
 void ImgManager::clearMapTextureObjects(){
     for (std::map<std::string, SDL_Texture*>::iterator it = imgLoaded.begin() ; it != imgLoaded.end(); ++it)
     {
         SDL_DestroyTexture(it->second);
-        imgLoaded.erase(it);
+        imgLoaded.erase(it->first);
     } 
     imgLoaded.clear();
 }

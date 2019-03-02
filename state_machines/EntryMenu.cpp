@@ -65,7 +65,7 @@ void EntryMenu::handleEvent(){
 }
 
 bool EntryMenu::onEnterState(){
-    std::cout << "onEnter Menu" << std::endl;
+    //std::cout << "onEnter Menu" << std::endl;
     text = new TextObject(50, {0,0,255}, "Welcome to OpenSource Quest");
     text->loadObject("assets/fonts/Deutsch.ttf", "gameTitle", 35, 30, 200, 120, -1, -1);    
     playbutton = new MenuObject();
@@ -75,16 +75,17 @@ bool EntryMenu::onEnterState(){
     SmileSoundHandler::Instance()->loadSound("assets/music/bensound-birthofahero.mp3", "back", SOUND_MUSIC);
     SmileSoundHandler::Instance()->playBackMusic("back", -1);
 
+    stateObjects.push_back(text);
     stateObjects.push_back(playbutton);
     stateObjects.push_back(exitButton);
-    stateObjects.push_back(text);        
-    std::cout << "Menu - number of objects is " << stateObjects.size() << std::endl;
+            
+    //std::cout << "Menu - number of objects is " << stateObjects.size() << std::endl;
     return true;
 }
 bool EntryMenu::onExitState(){
-    std::cout << "onExit Menu" << std::endl;
+  //  std::cout << "onExit Menu" << std::endl;
     clearObjectsFromScene();
-std::cout << "Menu exit - number of objects is " << stateObjects.size() << std::endl;
+//std::cout << "Menu exit - number of objects is " << stateObjects.size() << std::endl;
     return true;
 }
 

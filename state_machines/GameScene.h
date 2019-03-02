@@ -34,9 +34,13 @@ class GameScene : public GeneralStateMachine
         int playerUserCurrentRow;
         long timeStart;
         long timeEllapsedToUpdate;
+
+        long timeStartGameTimer;
+        long timeEllapsedTimer;
         int dx, dy;
         int delta;
         int directionChooser;
+        unsigned int timeLeft;
 };
 
 #endif

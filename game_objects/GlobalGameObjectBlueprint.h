@@ -19,7 +19,7 @@ class GlobalGameObjectBlueprint {
         std::string getObjectType(){return objectType;}
         void setObjectType(std::string objectTypeUser){objectType = objectTypeUser;}
 
-
+        std::string getImgID(){return imageID;}
         int getImgWidth(){return imgWidth;}
         int getImgHeight(){return imgHeight;}
 

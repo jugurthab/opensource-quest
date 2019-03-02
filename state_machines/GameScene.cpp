@@ -127,12 +127,35 @@ void GameScene::updateState(){
     }
     pUser->setCurrentRow(playerUserCurrentRow);
 
+    
+    for(int i=0; i<stateObjects.size();i++){
+        if(stateObjects[i]->getImgID() == std::string("gameScene")){
+            timeEllapsedTimer = SDL_GetTicks();
+            if(timeEllapsedTimer - timeStartGameTimer > 1000){
+                gameImgManager::Instance()->eraseImg(stateObjects[i]->getImgID());
+                stateObjects.erase(stateObjects.begin() + i);
+                timeLeft-=1;
+                char tmp[20];
+                sprintf(tmp, "Time left : %d", timeLeft);
+                GameSceneText = new TextObject(50, {255,0,0}, tmp);
+                
+                GameSceneText->loadObject("assets/fonts/Deutsch.ttf", "gameScene", 20, 30, 200, 120, -1, -1);
+                std::cout << GameSceneText->getImgID() << std::endl;
+                stateObjects.push_back(GameSceneText);
+                timeStartGameTimer = timeEllapsedTimer;
+                std::cout << timeLeft << " : " << stateObjects.size() << std::endl;
+            }
+        }
+    }
+
 }
 
 void GameScene::renderState(){    
-    for(int i=0; i<stateObjects.size();i++)
-        stateObjects[i]->drawObject(SDL_FLIP_NONE);
+    for (std::vector<GlobalGameObjectBlueprint*>::iterator it = stateObjects.begin() ; it != stateObjects.end(); ++it)
+    {
+            (*it)->drawObject(SDL_FLIP_NONE);
 
+    }
 }
         
 bool GameScene::parseXMLLevel(){
@@ -154,14 +177,14 @@ bool GameScene::parseXMLLevel(){
         return false;
     }   
     // Display root node    
-    std::cout << "Root Element : " << pRoot->Value() << std::endl;
+    //std::cout << "Root Element : " << pRoot->Value() << std::endl;
     
 
 
     // Traverse root element to get it's children    (geek tags in our example) 
     for(tinyxml2::XMLElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
     {      
-        std::cout << "TAG : " << e->Value() << std::endl;
+        //std::cout << "TAG : " << e->Value() << std::endl;
         if(e->Value() == std::string("level_difficulty")){
             std::cout << "level_difficulty : " << e->GetText() << std::endl;
         }
@@ -169,7 +192,7 @@ bool GameScene::parseXMLLevel(){
             int posX = 0, posY = 0;
             std::string pathToImg = "assets/";
             
-            std::cout << e->Attribute("id") << std::endl;
+            //std::cout << e->Attribute("id") << std::endl;
             pathToImg += e->Attribute("id");
             for(tinyxml2::XMLElement* subEl = e->FirstChildElement(); subEl != NULL; subEl = subEl->NextSiblingElement()){
                 
@@ -177,7 +200,7 @@ bool GameScene::parseXMLLevel(){
                     posX = atoi(subEl->GetText());
                 else
                     posY = atoi(subEl->GetText());
-                std::cout << subEl->Value() << " : " << subEl->GetText() << std::endl;
+                //std::cout << subEl->Value() << " : " << subEl->GetText() << std::endl;
             }
             pUser->loadObject(pathToImg, "linux", posX, posY, 50, 50, 0, 7);
             stateObjects.push_back(pUser);
@@ -188,7 +211,7 @@ bool GameScene::parseXMLLevel(){
             std::string pathToImg = "assets/";
             
 
-            std::cout << e->Attribute("id") << std::endl;
+            //std::cout << e->Attribute("id") << std::endl;
             pathToImg += e->Attribute("id");
             for(tinyxml2::XMLElement* subEl = e->FirstChildElement(); subEl != NULL; subEl = subEl->NextSiblingElement()){
                 Enemy* enemy = new Enemy();
@@ -210,7 +233,7 @@ bool GameScene::parseXMLLevel(){
             int posX = 0, posY = 0;
             std::string pathToImg = "assets/";
             pathToImg += e->Attribute("id");
-            std::cout << e->Attribute("id") << std::endl;
+            //std::cout << e->Attribute("id") << std::endl;
             for(tinyxml2::XMLElement* subEl = e->FirstChildElement(); subEl != NULL; subEl = subEl->NextSiblingElement()){
                 Block* block = new Block();
                 //std::cout << subEl->Value() << " : " << subEl->Attribute("x") << subEl->Attribute("y") << std::endl;
@@ -239,7 +262,10 @@ bool GameScene::parseXMLLevel(){
                 stateObjects.push_back(user);
             }  
         }
-        std::cout << "------------------------------------" << std::endl;    
+        else if(e->Value() == std::string("play_time")){
+            timeLeft = atoi(e->GetText());
+        }
+        //std::cout << "------------------------------------" << std::endl;    
     } 
 }
 
@@ -318,24 +344,24 @@ bool GameScene::onEnterState(){
     srand(time(0));
     dx = dy = delta = 0;
     pUser = new PlayerUser();
-    GameScene::parseXMLLevel();
-    GameSceneText = new TextObject(40, {255,0,255}, "Game scene");
-    GameSceneText->loadObject("assets/fonts/PTC55F.ttf", "gameScene", 20, 30, 200, 120, -1, -1);
     
-    std::cout << "onEnter GameScene" << std::endl;
+    GameSceneText = new TextObject(20, {255,0,255}, "Game scene");
+    GameSceneText->loadObject("assets/fonts/Deutsch.ttf", "gameScene", 20, 30, 200, 120, -1, -1);
+    GameScene::parseXMLLevel();
+    //std::cout << "onEnter GameScene" << std::endl;
     
     SmileSoundHandler::Instance()->loadSound("assets/music/backMusic.mp3", "back", SOUND_MUSIC);
     SmileSoundHandler::Instance()->playBackMusic("back", -1);
 
     stateObjects.push_back(GameSceneText); 
-    std::cout << "GameScene - number of objects is " << stateObjects.size() << std::endl;       
+    //std::cout << "GameScene - number of objects is " << stateObjects.size() << std::endl;       
 
     return true;
 }
 bool GameScene::onExitState(){
-    std::cout << "onExit GameScene" << std::endl;
+    //std::cout << "onExit GameScene" << std::endl;
     clearObjectsFromScene();
-    std::cout << "GameScene exit - number of objects is " << stateObjects.size() << std::endl;       
+    //std::cout << "GameScene exit - number of objects is " << stateObjects.size() << std::endl;       
 
     return true;
 }

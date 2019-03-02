@@ -39,12 +39,14 @@ bool SoundHandler::loadSound(std::string soundFileName, std::string soundID,choi
 void SoundHandler::clearMapSoundRessources(){
     for (std::map<std::string, Mix_Music*>::iterator it = m_music.begin() ; it != m_music.end(); ++it)
     {
+        Mix_FreeMusic(it->second);
         m_music.erase(it);
     } 
     m_music.clear();
 
     for (std::map<std::string, Mix_Chunk*>::iterator it = m_chunk.begin() ; it != m_chunk.end(); ++it)
     {
+        Mix_FreeChunk(it->second);
         m_chunk.erase(it);
     } 
     m_chunk.clear();
