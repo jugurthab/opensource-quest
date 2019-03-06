@@ -96,8 +96,16 @@ void GameScene::updateState(){
                     static_cast<Enemy*>(stateObjects[i])->setdY(10);
                 }*/
 
-                
+                for(int j=0; j<stateObjects.size();j++){
+                    if(stateObjects[j]->getObjectType() == std::string("boy") || stateObjects[j]->getObjectType() == std::string("girl") || stateObjects[j]->getObjectType() == std::string("boyGreen")){
+                        if(stateObjects[i]->getImgXPos() == stateObjects[j]->getImgXPos() && stateObjects[i]->getImgYPos() == stateObjects[j]->getImgYPos()){
+                            stateObjects[j]->setCurrentRow(4);
+                            stateObjects[j]->setCurrentFrame(playerUserCurrentFrame);
+                        }
+                        
+                    }
 
+                }    
                 
             }
 
