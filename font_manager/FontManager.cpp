@@ -19,9 +19,9 @@ SDL_Texture* FontManager::loadFont(std::string FontFilename, std::string fontID,
     SDL_Surface *fontSurface = TTF_RenderText_Blended(font, textToBlit.c_str(), color);
     
     SDL_Texture *fontTexture = SDL_CreateTextureFromSurface(SmileGameLogic::Instance()->getRenderer(), fontSurface);
-
+    
+    SDL_FreeSurface(fontSurface);
     TTF_CloseFont(font);
-
 
     return fontTexture;    
 }
