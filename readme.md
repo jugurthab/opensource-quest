@@ -12,6 +12,7 @@ Opensource quest is based on **SDL** and some of it's extensions :
     $ sudo apt-get install libsdl2-dev
     $ sudo apt-get install libsdl2-mixer-2.0-0
     $ sudo apt-get install libsdl2-ttf-dev
+    $ sudo apt-get install libtinyxml2-dev
 
 ## Compilation
 
