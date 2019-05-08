@@ -4,7 +4,25 @@
 
 const std::string GameScene::gameStateID = "GAME_STATE";
 
+char* GameScene::setTimeLeftText(){
+    char* tmp;
+    sprintf(tmp, "Time left : %d", timeLeft);
+    return tmp;
+}
+
 void GameScene::updateState(){
+    timeEllapsedTimer = SDL_GetTicks();
+    // Reduce timeleft by 1 second.
+    if(timeEllapsedTimer - timeStartGameTimer > 1000){
+        gameImgManager::Instance()->eraseImg("gameScene");
+        timeLeft-=1;
+        GameSceneText = new TextObject(20, {255,0,0}, setTimeLeftText());
+        GameSceneText->loadObject("assets/fonts/Deutsch.ttf", "gameScene", 20, 30, 300, 120, -1, -1);
+        stateObjects.push_back(GameSceneText);
+        timeStartGameTimer = timeEllapsedTimer;
+        GameSceneText->updateObject();
+    }
+    
     timeEllapsedToUpdate = SDL_GetTicks();
     if(timeEllapsedToUpdate - timeStart > 100){
         if(playerUserCurrentFrame==2)
@@ -42,7 +60,7 @@ void GameScene::updateState(){
         }
 
             for(int i=0; i<stateObjects.size();i++){
-             stateObjects[i]->updateObject();
+             stateObjects[i]->updateObject();  
              if(stateObjects[i]->getObjectType() == std::string("enemies")){
                 if((pUser->getImgYPos()) == stateObjects[i]->getImgYPos() && pUser->getImgXPos() == stateObjects[i]->getImgXPos()){
                         playerUserCurrentRow = 8;
@@ -88,14 +106,6 @@ void GameScene::updateState(){
                     stateObjects[i]->setImgYPos(stateObjects[i]->getImgYPos()+ static_cast<Enemy*>(stateObjects[i])->getdY());
                 }
 
-                /*if((stateObjects[i]->getImgYPos()+50) > 480){
-                    static_cast<Enemy*>(stateObjects[i])->setdY(-10);  
-                } else if((stateObjects[i]->getImgYPos()-50) < 0){
-                    static_cast<Enemy*>(stateObjects[i])->setdY(10);
-                } else{
-                    static_cast<Enemy*>(stateObjects[i])->setdY(10);
-                }*/
-
                 for(int j=0; j<stateObjects.size();j++){
                     if(stateObjects[j]->getObjectType() == std::string("boy") || stateObjects[j]->getObjectType() == std::string("girl") || stateObjects[j]->getObjectType() == std::string("boyGreen")){
                         if(stateObjects[i]->getImgXPos() == stateObjects[j]->getImgXPos() && stateObjects[i]->getImgYPos() == stateObjects[j]->getImgYPos()){
@@ -135,27 +145,6 @@ void GameScene::updateState(){
     }
     pUser->setCurrentRow(playerUserCurrentRow);
 
-    
-    for(int i=0; i<stateObjects.size();i++){
-        if(stateObjects[i]->getImgID() == std::string("gameScene")){
-            timeEllapsedTimer = SDL_GetTicks();
-            if(timeEllapsedTimer - timeStartGameTimer > 1000){
-                gameImgManager::Instance()->eraseImg(stateObjects[i]->getImgID());
-                stateObjects.erase(stateObjects.begin() + i);
-                timeLeft-=1;
-                char tmp[20];
-                sprintf(tmp, "Time left : %d", timeLeft);
-                GameSceneText = new TextObject(50, {255,0,0}, tmp);
-                
-                GameSceneText->loadObject("assets/fonts/Deutsch.ttf", "gameScene", 20, 30, 200, 120, -1, -1);
-                std::cout << GameSceneText->getImgID() << std::endl;
-                stateObjects.push_back(GameSceneText);
-                timeStartGameTimer = timeEllapsedTimer;
-                std::cout << timeLeft << " : " << stateObjects.size() << std::endl;
-            }
-        }
-    }
-
 }
 
 void GameScene::renderState(){    
@@ -164,6 +153,7 @@ void GameScene::renderState(){
             (*it)->drawObject(SDL_FLIP_NONE);
 
     }
+    GameSceneText->drawObject(SDL_FLIP_NONE);
 }
         
 bool GameScene::parseXMLLevel(){
@@ -177,30 +167,21 @@ bool GameScene::parseXMLLevel(){
         return false;
     }
 
-    // Get reference to root element "geeks"
     tinyxml2::XMLNode* pRoot = xmlDoc.RootElement();
     // Check if pRoot is non empty
     if (pRoot == NULL){
         std::cout << "Invalid XML file" << std::endl;
         return false;
     }   
-    // Display root node    
-    //std::cout << "Root Element : " << pRoot->Value() << std::endl;
-    
 
-
-    // Traverse root element to get it's children    (geek tags in our example) 
     for(tinyxml2::XMLElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
     {      
-        //std::cout << "TAG : " << e->Value() << std::endl;
         if(e->Value() == std::string("level_difficulty")){
             std::cout << "level_difficulty : " << e->GetText() << std::endl;
         }
         else if(e->Value() == std::string("player")){ 
             int posX = 0, posY = 0;
             std::string pathToImg = "assets/";
-            
-            //std::cout << e->Attribute("id") << std::endl;
             pathToImg += e->Attribute("id");
             for(tinyxml2::XMLElement* subEl = e->FirstChildElement(); subEl != NULL; subEl = subEl->NextSiblingElement()){
                 
@@ -208,7 +189,6 @@ bool GameScene::parseXMLLevel(){
                     posX = atoi(subEl->GetText());
                 else
                     posY = atoi(subEl->GetText());
-                //std::cout << subEl->Value() << " : " << subEl->GetText() << std::endl;
             }
             pUser->loadObject(pathToImg, "linux", posX, posY, 50, 50, 0, 7);
             stateObjects.push_back(pUser);
@@ -217,19 +197,12 @@ bool GameScene::parseXMLLevel(){
         else if(e->Value() == std::string("enemies")) {
             int posX = 0, posY = 0;
             std::string pathToImg = "assets/";
-            
-
-            //std::cout << e->Attribute("id") << std::endl;
             pathToImg += e->Attribute("id");
             for(tinyxml2::XMLElement* subEl = e->FirstChildElement(); subEl != NULL; subEl = subEl->NextSiblingElement()){
                 Enemy* enemy = new Enemy();
-                //std::cout << subEl->Value() << " : " << subEl->Attribute("x") << subEl->Attribute("y") << std::endl;
-
-                
                 
                 posX = atoi(subEl->Attribute("x"));
                 posY = atoi(subEl->Attribute("y"));
-                //std::cout << subEl->Value() << " : " << subEl->GetText() << std::endl;
                 enemy->loadObject(pathToImg, e->Attribute("id"), posX, posY, 50, 50, 0, 0);
                 enemy->setObjectType("enemies");
                 stateObjects.push_back(enemy); 
@@ -241,13 +214,11 @@ bool GameScene::parseXMLLevel(){
             int posX = 0, posY = 0;
             std::string pathToImg = "assets/";
             pathToImg += e->Attribute("id");
-            //std::cout << e->Attribute("id") << std::endl;
             for(tinyxml2::XMLElement* subEl = e->FirstChildElement(); subEl != NULL; subEl = subEl->NextSiblingElement()){
                 Block* block = new Block();
-                //std::cout << subEl->Value() << " : " << subEl->Attribute("x") << subEl->Attribute("y") << std::endl;
                 posX = atoi(subEl->Attribute("x"));
                 posY = atoi(subEl->Attribute("y"));
-                //std::cout << subEl->Value() << " : " << subEl->GetText() << std::endl;
+
                 block->loadObject(pathToImg, "block", posX, posY, 50, 50, 0, 0);
                 block->setObjectType("obstacles");
                 stateObjects.push_back(block);
@@ -261,10 +232,8 @@ bool GameScene::parseXMLLevel(){
             std::cout << e->Attribute("id") << std::endl;
             for(tinyxml2::XMLElement* subEl = e->FirstChildElement(); subEl != NULL; subEl = subEl->NextSiblingElement()){
                 Users* user = new Users();
-                //std::cout << subEl->Value() << " : " << subEl->Attribute("x") << subEl->Attribute("y") << std::endl;
                 posX = atoi(subEl->Attribute("x"));
                 posY = atoi(subEl->Attribute("y"));
-                //std::cout << subEl->Value() << " : " << subEl->GetText() << std::endl;
                 user->loadObject(pathToImg, "users", posX, posY, 50, 50, atoi(subEl->Attribute("currentFrame")), atoi(subEl->Attribute("currentRow")));
                 user->setObjectType(subEl->Attribute("type"));
                 stateObjects.push_back(user);
@@ -272,8 +241,7 @@ bool GameScene::parseXMLLevel(){
         }
         else if(e->Value() == std::string("play_time")){
             timeLeft = atoi(e->GetText());
-        }
-        //std::cout << "------------------------------------" << std::endl;    
+        } 
     } 
 }
 
@@ -350,27 +318,17 @@ void GameScene::handleEvent(){
 
 bool GameScene::onEnterState(){
     srand(time(0));
-    dx = dy = delta = 0;
+    dx = dy = delta = timeStartGameTimer = 0;
     pUser = new PlayerUser();
-    
-    GameSceneText = new TextObject(20, {255,0,255}, "Game scene");
-    GameSceneText->loadObject("assets/fonts/Deutsch.ttf", "gameScene", 20, 30, 200, 120, -1, -1);
-    GameScene::parseXMLLevel();
-    //std::cout << "onEnter GameScene" << std::endl;
-    
     SmileSoundHandler::Instance()->loadSound("assets/music/backMusic.mp3", "back", SOUND_MUSIC);
     SmileSoundHandler::Instance()->playBackMusic("back", -1);
-
-    stateObjects.push_back(GameSceneText); 
-    //std::cout << "GameScene - number of objects is " << stateObjects.size() << std::endl;       
-
+    GameScene::parseXMLLevel();
+    GameSceneText = new TextObject(20, {255,0,255}, "Time left : 00");
+    GameSceneText->loadObject("assets/fonts/Deutsch.ttf", "gameScene", 20, 30, 200, 120, -1, -1);
     return true;
 }
 bool GameScene::onExitState(){
-    //std::cout << "onExit GameScene" << std::endl;
     clearObjectsFromScene();
-    //std::cout << "GameScene exit - number of objects is " << stateObjects.size() << std::endl;       
-
     return true;
 }
 

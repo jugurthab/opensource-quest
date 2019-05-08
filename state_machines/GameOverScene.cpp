@@ -25,7 +25,8 @@ void GameOverScene::handleEvent(){
         case SDL_KEYDOWN:
                 if(event.key.keysym.sym==SDLK_ESCAPE){
                     std::cout << "GameScene" <<std::endl;
-                    SmileStateMachine::Instance()->removeState();
+                    //SmileStateMachine::Instance()->removeState();
+                    SmileStateMachine::Instance()->switchState(new EntryMenu());
                 }
                 
             break;

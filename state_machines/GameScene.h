@@ -25,6 +25,7 @@ class GameScene : public GeneralStateMachine
         bool parseXMLLevel();
         std::string getStateName() const { return gameStateID; }
         void clearObjectsFromScene();
+        char* setTimeLeftText();
 
     private:
         static const std::string gameStateID;
