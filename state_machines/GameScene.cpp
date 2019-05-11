@@ -17,7 +17,7 @@ void GameScene::updateState(){
         gameImgManager::Instance()->eraseImg("gameScene");
         timeLeft-=1;
         GameSceneText = new TextObject(20, {255,0,0}, setTimeLeftText());
-        GameSceneText->loadObject("assets/fonts/Deutsch.ttf", "gameScene", 20, 30, 300, 120, -1, -1);
+        GameSceneText->loadObject("assets/fonts/Deutsch.ttf", "gameScene", 20, 30, 400, 60, -1, -1);
         stateObjects.push_back(GameSceneText);
         timeStartGameTimer = timeEllapsedTimer;
         GameSceneText->updateObject();
@@ -91,19 +91,21 @@ void GameScene::updateState(){
                     }
                 }
 
-                if((stateObjects[i]->getImgXPos()+50) < 640 && static_cast<Enemy*>(stateObjects[i])->getdX()>0){
+                if(stateObjects[i]->getImgXPos()+ static_cast<Enemy*>(stateObjects[i])->getdX() < 640 && stateObjects[i]->getImgXPos() + static_cast<Enemy*>(stateObjects[i])->getdX()>0 && static_cast<Enemy*>(stateObjects[i])->getdX()!=0){
                     stateObjects[i]->setImgXPos(stateObjects[i]->getImgXPos()+ static_cast<Enemy*>(stateObjects[i])->getdX());  
-                }
-                 else if((stateObjects[i]->getImgXPos()-50) >= 0 && static_cast<Enemy*>(stateObjects[i])->getdX() < 0){
-                    stateObjects[i]->setImgXPos(stateObjects[i]->getImgXPos()+ static_cast<Enemy*>(stateObjects[i])->getdX());
+                }else if(stateObjects[i]->getImgXPos() < 50){
+                    stateObjects[i]->setImgXPos(50);
+                }else if(stateObjects[i]->getImgXPos() >=600){
+                    stateObjects[i]->setImgXPos(stateObjects[i]->getImgXPos() - 50);
                 }
 
                 
-                else if((stateObjects[i]->getImgYPos()+50) < 480 && static_cast<Enemy*>(stateObjects[i])->getdY()>0){
+                else if(stateObjects[i]->getImgYPos()+static_cast<Enemy*>(stateObjects[i])->getdY() < 480 && stateObjects[i]->getImgYPos() + static_cast<Enemy*>(stateObjects[i])->getdY()>0 && static_cast<Enemy*>(stateObjects[i])->getdY()!=0){
                     stateObjects[i]->setImgYPos(stateObjects[i]->getImgYPos()+ static_cast<Enemy*>(stateObjects[i])->getdY());  
-                }
-                else if((stateObjects[i]->getImgYPos()-50) >= 0 && static_cast<Enemy*>(stateObjects[i])->getdY()< 0){
-                    stateObjects[i]->setImgYPos(stateObjects[i]->getImgYPos()+ static_cast<Enemy*>(stateObjects[i])->getdY());
+                }else if(stateObjects[i]->getImgYPos() < 50){
+                    stateObjects[i]->setImgYPos(50);
+                }else if(stateObjects[i]->getImgYPos() >=440){
+                    stateObjects[i]->setImgYPos(stateObjects[i]->getImgYPos() - 50);
                 }
 
                 for(int j=0; j<stateObjects.size();j++){
