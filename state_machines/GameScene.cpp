@@ -40,8 +40,7 @@ void GameScene::updateState(){
                 dx += delta;
                 playerUserCurrentRow = 7;
             }
-            pUser->setImgXPos(pUser->getImgXPos()+delta);
-            std::cout << dx << std::endl;        
+            pUser->setImgXPos(pUser->getImgXPos()+delta);    
         }
 
         if(dy!=0){
@@ -91,21 +90,45 @@ void GameScene::updateState(){
                     }
                 }
 
-                if(stateObjects[i]->getImgXPos()+ static_cast<Enemy*>(stateObjects[i])->getdX() < 640 && stateObjects[i]->getImgXPos() + static_cast<Enemy*>(stateObjects[i])->getdX()>0 && static_cast<Enemy*>(stateObjects[i])->getdX()!=0){
-                    stateObjects[i]->setImgXPos(stateObjects[i]->getImgXPos()+ static_cast<Enemy*>(stateObjects[i])->getdX());  
+                if(stateObjects[i]->getImgXPos()+ static_cast<Enemy*>(stateObjects[i])->getdX() < 640 && stateObjects[i]->getImgXPos() + static_cast<Enemy*>(stateObjects[i])->getdX()>0 && static_cast<Enemy*>(stateObjects[i])->getdX()!=0){ 
+                for(int n=0; n<stateObjects.size();n++){
+                             if(stateObjects[n]->getObjectType() ==std::string("obstacles")){
+                                    if( ( (static_cast<Enemy*>(stateObjects[i])->getdX()>=0 && (stateObjects[i]->getImgXPos()+50 == stateObjects[n]->getImgXPos()) ) || (static_cast<Enemy*>(stateObjects[i])->getdX()<0 && (stateObjects[i]->getImgXPos()-50 == stateObjects[n]->getImgXPos())) )
+                                    && (stateObjects[i]->getImgYPos() == stateObjects[n]->getImgYPos())
+                                    ){
+                                                static_cast<Enemy*>(stateObjects[i])->setdX(0);
+                                        break;
+                                    }                            
+
+                             }
+           
+                }
+                        stateObjects[i]->setImgXPos(stateObjects[i]->getImgXPos()+ static_cast<Enemy*>(stateObjects[i])->getdX());  
                 }else if(stateObjects[i]->getImgXPos() < 50){
-                    stateObjects[i]->setImgXPos(50);
+                    static_cast<Enemy*>(stateObjects[i])->setdX(10);
                 }else if(stateObjects[i]->getImgXPos() >=600){
-                    stateObjects[i]->setImgXPos(stateObjects[i]->getImgXPos() - 50);
+                    static_cast<Enemy*>(stateObjects[i])->setdX(-10);
                 }
 
                 
                 else if(stateObjects[i]->getImgYPos()+static_cast<Enemy*>(stateObjects[i])->getdY() < 480 && stateObjects[i]->getImgYPos() + static_cast<Enemy*>(stateObjects[i])->getdY()>0 && static_cast<Enemy*>(stateObjects[i])->getdY()!=0){
-                    stateObjects[i]->setImgYPos(stateObjects[i]->getImgYPos()+ static_cast<Enemy*>(stateObjects[i])->getdY());  
+                for(int n=0; n<stateObjects.size();n++){
+                             if(stateObjects[n]->getObjectType() ==std::string("obstacles")){
+                                    if( ( (static_cast<Enemy*>(stateObjects[i])->getdY()>=0 && (stateObjects[i]->getImgYPos()+50 == stateObjects[n]->getImgYPos()) ) || (static_cast<Enemy*>(stateObjects[i])->getdY()<0 && (stateObjects[i]->getImgYPos()-50 == stateObjects[n]->getImgYPos())) )
+                                    && (stateObjects[i]->getImgXPos() == stateObjects[n]->getImgXPos())
+                                    ){
+                                                static_cast<Enemy*>(stateObjects[i])->setdY(0);
+                                        break;
+                                    }                            
+
+                             }
+           
+                }
+                        stateObjects[i]->setImgYPos(stateObjects[i]->getImgYPos()+ static_cast<Enemy*>(stateObjects[i])->getdY());  
                 }else if(stateObjects[i]->getImgYPos() < 50){
-                    stateObjects[i]->setImgYPos(50);
+                     static_cast<Enemy*>(stateObjects[i])->setdY(10);
                 }else if(stateObjects[i]->getImgYPos() >=440){
-                    stateObjects[i]->setImgYPos(stateObjects[i]->getImgYPos() - 50);
+                     static_cast<Enemy*>(stateObjects[i])->setdY(-10);
                 }
 
                 for(int j=0; j<stateObjects.size();j++){
@@ -269,7 +292,6 @@ void GameScene::handleEvent(){
                                 }
                             }
                             delta = -10; dy= -10;
-                            //pUser->setImgYPos(pUser->getImgYPos()-dy);
                         }
                         playerUserCurrentRow = 2;
                     break;
@@ -283,7 +305,6 @@ void GameScene::handleEvent(){
                                     }
                                 }
                             delta = 10; dy= 10;
-                            //pUser->setImgYPos(pUser->getImgYPos()+dy);
                     }                    
                     playerUserCurrentRow = 1;
                     break;
@@ -297,7 +318,6 @@ void GameScene::handleEvent(){
                                     }
                                 }   
                             delta = 10; dx= 10;
-                            //pUser->setImgXPos(pUser->getImgXPos()+50);
                         }
                         pUser->setFlipDirection(SDL_FLIP_NONE);
                     break;
@@ -310,7 +330,6 @@ void GameScene::handleEvent(){
                                     }
                                 }
                             delta = -10; dx = -10;
-                            //pUser->setImgXPos(pUser->getImgXPos()-50);
                         }
                         pUser->setFlipDirection(SDL_FLIP_HORIZONTAL);
                     break;
