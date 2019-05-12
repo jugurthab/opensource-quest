@@ -66,7 +66,7 @@ void EntryMenu::handleEvent(){
 
 bool EntryMenu::onEnterState(){
     text = new TextObject(50, {0,0,255}, "Welcome to OpenSource Quest");
-    text->loadObject("assets/fonts/Deutsch.ttf", "gameTitle", 35, 30, 200, 120, -1, -1);    
+    text->loadObject("assets/fonts/Deutsch.ttf", "gameTitle", -1, 30, 200, 120, -1, -1);    
     playbutton = new MenuObject();
     exitButton = new MenuObject();
     playbutton->loadObject("assets/play_button.bmp", "playButton", 120, 150, 400, 100, 0, 0);

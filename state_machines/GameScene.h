@@ -26,13 +26,16 @@ class GameScene : public GeneralStateMachine
         std::string getStateName() const { return gameStateID; }
         void clearObjectsFromScene();
         char* setTimeLeftText();
+        void setLivesSavedText(int savedLivesCounter);
 
     private:
         static const std::string gameStateID;
         TextObject *GameSceneText;
+        TextObject *savedLives;
         PlayerUser *pUser;
         int playerUserCurrentFrame;
         int playerUserCurrentRow;
+        int nbOfSavedLives;
         long timeStart;
         long timeEllapsedToUpdate;
 

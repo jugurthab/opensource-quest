@@ -8,10 +8,22 @@ void TextObject::loadObject(std::string imgFileNameP, std::string imageIDP, int 
     SDL_Texture *texture = SmileFontManager::Instance()->loadFont(imgFileNameP, imageIDP, fontSizeL, fontColorL, textToBlitP); 
     SDL_QueryTexture(texture, NULL, NULL, &imgWidth, &imgHeight);
 
-    imgXPos = (640 - imgWidth)/2;
-    
+    if(imgXPosP==-1)
+        imgXPos = (640 - imgWidth)/2;
+    else if(imgXPosP==-2)
+        imgXPos = 0;
+    else if(imgXPosP==-3)
+        imgXPos = 640 - imgWidth;
+    else
+        imgXPos = imgXPosP;
+
+    if(imgYPosP==-1)
+        imgYPos = (480 - imgHeight)/2;
+    else
+        imgYPos = imgYPosP;
+
     //imgWidth = imgWidthP;
-    imgHeight = imgHeightP;
+    //imgHeight = imgHeightP;
 
     
     gameImgManager::Instance()->addTexture(texture, imageID);

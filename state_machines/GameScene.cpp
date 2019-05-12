@@ -10,15 +10,26 @@ char* GameScene::setTimeLeftText(){
     return tmp;
 }
 
+void GameScene::setLivesSavedText(int savedLivesCounter){
+    char tmpLives[20];
+    nbOfSavedLives+=savedLivesCounter;
+    if(nbOfSavedLives<0)
+        nbOfSavedLives =0;
+    gameImgManager::Instance()->eraseImg("gameSceneLivesSaved");
+    sprintf(tmpLives, "lives saved : %d", nbOfSavedLives);
+    savedLives = new TextObject(20, {255,0,255}, tmpLives);
+    savedLives->loadObject("assets/fonts/Deutsch.ttf", "gameSceneLivesSaved", -3, 5, 200, 60, -1, -1);
+    savedLives->updateObject();
+}
+
 void GameScene::updateState(){
     timeEllapsedTimer = SDL_GetTicks();
-    // Reduce timeleft by 1 second.
+    /* Reduce timeleft by 1 second. */
     if(timeEllapsedTimer - timeStartGameTimer > 1000){
         gameImgManager::Instance()->eraseImg("gameScene");
         timeLeft-=1;
-        GameSceneText = new TextObject(20, {255,0,0}, setTimeLeftText());
-        GameSceneText->loadObject("assets/fonts/Deutsch.ttf", "gameScene", 20, 30, 400, 60, -1, -1);
-        stateObjects.push_back(GameSceneText);
+        GameSceneText = new TextObject(30, {255,0,0}, setTimeLeftText());
+        GameSceneText->loadObject("assets/fonts/Deutsch.ttf", "gameScene", -2, 5, 400, 60, -1, -1);
         timeStartGameTimer = timeEllapsedTimer;
         GameSceneText->updateObject();
     }
@@ -134,8 +145,11 @@ void GameScene::updateState(){
                 for(int j=0; j<stateObjects.size();j++){
                     if(stateObjects[j]->getObjectType() == std::string("boy") || stateObjects[j]->getObjectType() == std::string("girl") || stateObjects[j]->getObjectType() == std::string("boyGreen")){
                         if(stateObjects[i]->getImgXPos() == stateObjects[j]->getImgXPos() && stateObjects[i]->getImgYPos() == stateObjects[j]->getImgYPos()){
-                            stateObjects[j]->setCurrentRow(4);
-                            stateObjects[j]->setCurrentFrame(playerUserCurrentFrame);
+                            if(stateObjects[j]->getCurrentRow()==0){
+                                stateObjects[j]->setCurrentRow(4);
+                                stateObjects[j]->setCurrentFrame(playerUserCurrentFrame);
+                                setLivesSavedText(-1);
+                            }
                         }
                         
                     }
@@ -145,23 +159,31 @@ void GameScene::updateState(){
             }
 
             else if(stateObjects[i]->getObjectType() == std::string("boy")){
+                        
                 if((pUser->getImgYPos()) == stateObjects[i]->getImgYPos() && pUser->getImgXPos() == stateObjects[i]->getImgXPos()){
-                    stateObjects[i]->setCurrentRow(0);
+                    if(stateObjects[i]->getCurrentRow()==4){
+                        stateObjects[i]->setCurrentRow(0);
+                        setLivesSavedText(1);
+                    }
                     
                 }
                 stateObjects[i]->setCurrentFrame(playerUserCurrentFrame);
             }
             else if(stateObjects[i]->getObjectType() == std::string("girl")){
                 if((pUser->getImgYPos()) == stateObjects[i]->getImgYPos() && pUser->getImgXPos() == stateObjects[i]->getImgXPos()){
-                    stateObjects[i]->setCurrentRow(0);
-                    
+                    if(stateObjects[i]->getCurrentRow()==4){
+                        stateObjects[i]->setCurrentRow(0);
+                        setLivesSavedText(1);
+                    }
                 }
                 stateObjects[i]->setCurrentFrame(3+playerUserCurrentFrame);
             }
             else if(stateObjects[i]->getObjectType() == std::string("boyGreen")){
                 if((pUser->getImgYPos()) == stateObjects[i]->getImgYPos() && pUser->getImgXPos() == stateObjects[i]->getImgXPos()){
-                    stateObjects[i]->setCurrentRow(0);
-
+                    if(stateObjects[i]->getCurrentRow()==4){
+                        stateObjects[i]->setCurrentRow(0);
+                        setLivesSavedText(1);
+                    }
                 }
                     stateObjects[i]->setCurrentFrame(6+playerUserCurrentFrame);
             }
@@ -173,12 +195,13 @@ void GameScene::updateState(){
 }
 
 void GameScene::renderState(){    
+    GameSceneText->drawObject(SDL_FLIP_NONE);
+    savedLives->drawObject(SDL_FLIP_NONE);
     for (std::vector<GlobalGameObjectBlueprint*>::iterator it = stateObjects.begin() ; it != stateObjects.end(); ++it)
     {
             (*it)->drawObject(SDL_FLIP_NONE);
 
     }
-    GameSceneText->drawObject(SDL_FLIP_NONE);
 }
         
 bool GameScene::parseXMLLevel(){
@@ -339,13 +362,15 @@ void GameScene::handleEvent(){
 
 bool GameScene::onEnterState(){
     srand(time(0));
-    dx = dy = delta = timeStartGameTimer = 0;
+    dx = dy = delta = timeStartGameTimer = nbOfSavedLives = 0;
     pUser = new PlayerUser();
     SmileSoundHandler::Instance()->loadSound("assets/music/backMusic.mp3", "back", SOUND_MUSIC);
     SmileSoundHandler::Instance()->playBackMusic("back", -1);
     GameScene::parseXMLLevel();
-    GameSceneText = new TextObject(20, {255,0,255}, "Time left : 00");
-    GameSceneText->loadObject("assets/fonts/Deutsch.ttf", "gameScene", 20, 30, 200, 120, -1, -1);
+    GameSceneText = new TextObject(30, {255,0,255}, "Time left : 00");
+    GameSceneText->loadObject("assets/fonts/Deutsch.ttf", "gameScene", -2, 5, 200, 60, -1, -1);
+    savedLives = new TextObject(20, {255,0,255}, "lives saved : 0");
+    savedLives->loadObject("assets/fonts/Deutsch.ttf", "gameSceneLivesSaved", -3, 5, 200, 60, -1, -1);
     return true;
 }
 bool GameScene::onExitState(){
