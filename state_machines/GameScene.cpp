@@ -167,34 +167,22 @@ void GameScene::updateState(){
                 
             }
 
-            else if(stateObjects[i]->getObjectType() == std::string("boy")){
-                        
+            else if(stateObjects[i]->getObjectType() == std::string("boy") || stateObjects[i]->getObjectType() == std::string("girl") || stateObjects[i]->getObjectType() == std::string("boyGreen")){
+                     short imageOffsetToDisplay = 0;   
                 if((pUser->getImgYPos()) == stateObjects[i]->getImgYPos() && pUser->getImgXPos() == stateObjects[i]->getImgXPos()){
                     if(stateObjects[i]->getCurrentRow()==4){
                         stateObjects[i]->setCurrentRow(0);
                         setLivesSavedText(1);
-                    }
-                    
+                    }                    
                 }
-                stateObjects[i]->setCurrentFrame(playerUserCurrentFrame);
-            }
-            else if(stateObjects[i]->getObjectType() == std::string("girl")){
-                if((pUser->getImgYPos()) == stateObjects[i]->getImgYPos() && pUser->getImgXPos() == stateObjects[i]->getImgXPos()){
-                    if(stateObjects[i]->getCurrentRow()==4){
-                        stateObjects[i]->setCurrentRow(0);
-                        setLivesSavedText(1);
-                    }
+                if(stateObjects[i]->getObjectType() == std::string("boy")){
+                        imageOffsetToDisplay = 0;
+                } else if(stateObjects[i]->getObjectType() == std::string("girl")){
+                        imageOffsetToDisplay = 3;
+                } else {
+                        imageOffsetToDisplay = 6;
                 }
-                stateObjects[i]->setCurrentFrame(3+playerUserCurrentFrame);
-            }
-            else if(stateObjects[i]->getObjectType() == std::string("boyGreen")){
-                if((pUser->getImgYPos()) == stateObjects[i]->getImgYPos() && pUser->getImgXPos() == stateObjects[i]->getImgXPos()){
-                    if(stateObjects[i]->getCurrentRow()==4){
-                        stateObjects[i]->setCurrentRow(0);
-                        setLivesSavedText(1);
-                    }
-                }
-                    stateObjects[i]->setCurrentFrame(6+playerUserCurrentFrame);
+                stateObjects[i]->setCurrentFrame(imageOffsetToDisplay + playerUserCurrentFrame);
             }
         }     
 
