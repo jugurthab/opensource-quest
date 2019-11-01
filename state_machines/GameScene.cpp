@@ -27,11 +27,16 @@ void GameScene::updateState(){
     /* Reduce timeleft by 1 second. */
     if(timeEllapsedTimer - timeStartGameTimer > 1000){
         gameImgManager::Instance()->eraseImg("gameScene");
-        timeLeft-=1;
+        timeLeft -= 1;
         GameSceneText = new TextObject(30, {255,0,0}, setTimeLeftText());
         GameSceneText->loadObject("assets/fonts/Deutsch.ttf", "gameScene", -2, 5, 400, 60, -1, -1);
         timeStartGameTimer = timeEllapsedTimer;
         GameSceneText->updateObject();
+
+        if(timeLeft==0){
+            SmileStateMachine::Instance()->switchState(new GameOverScene());
+            return;
+        }
     }
     
     timeEllapsedToUpdate = SDL_GetTicks();
@@ -361,6 +366,7 @@ void GameScene::handleEvent(){
 }
 
 bool GameScene::onEnterState(){
+    gameWinningStates = false;
     srand(time(0));
     dx = dy = delta = timeStartGameTimer = nbOfSavedLives = 0;
     pUser = new PlayerUser();

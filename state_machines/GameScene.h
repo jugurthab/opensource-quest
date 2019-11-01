@@ -45,6 +45,8 @@ class GameScene : public GeneralStateMachine
         int delta;
         int directionChooser;
         unsigned int timeLeft;
+
+        bool gameWinningStates;
 };
 
 #endif
