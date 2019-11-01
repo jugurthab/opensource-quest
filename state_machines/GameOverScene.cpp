@@ -66,7 +66,7 @@ void GameOverScene::handleEvent(){
 bool GameOverScene::onEnterState(){
     currentFra =0;
     textGameOver = new TextObject(40,{0,255,0}, "Do not loose hope!");    
-    textGameOver->loadObject("assets/fonts/Deutsch.ttf", "gameoverfont", 20, 30, 200, 120, -1, -1);
+    textGameOver->loadObject("assets/fonts/Deutsch.ttf", "gameoverfont", -1, 30, 200, 120, -1, -1);
     std::cout << "onEnter GameOverScene" << std::endl;
     gameOverButton = new MenuObject();
         
