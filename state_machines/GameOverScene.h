@@ -8,6 +8,7 @@
 
 class GameOverScene : public GeneralStateMachine{
     public:
+        GameOverScene(bool gameWon = false);
         void updateState();
         void renderState();
         
@@ -29,6 +30,7 @@ class GameOverScene : public GeneralStateMachine{
         TextObject *textGameOver;
 
         int currentFra;
+        bool userWinGame;
 };
 
 

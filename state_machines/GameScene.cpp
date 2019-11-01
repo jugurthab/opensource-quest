@@ -12,7 +12,7 @@ char* GameScene::setTimeLeftText(){
 
 void GameScene::setLivesSavedText(int savedLivesCounter){
     char tmpLives[20];
-    nbOfSavedLives+=savedLivesCounter;
+    nbOfSavedLives += savedLivesCounter;
     if(nbOfSavedLives<0)
         nbOfSavedLives =0;
     gameImgManager::Instance()->eraseImg("gameSceneLivesSaved");
@@ -34,7 +34,11 @@ void GameScene::updateState(){
         GameSceneText->updateObject();
 
         if(timeLeft==0){
-            SmileStateMachine::Instance()->switchState(new GameOverScene());
+            if(nbOfSavedLives == nbOfLivesToSave){
+                SmileStateMachine::Instance()->switchState(new GameOverScene(true));
+            } else {
+                SmileStateMachine::Instance()->switchState(new GameOverScene(false));
+            }            
             return;
         }
     }
@@ -290,6 +294,7 @@ bool GameScene::parseXMLLevel(){
                 user->loadObject(pathToImg, "users", posX, posY, 50, 50, atoi(subEl->Attribute("currentFrame")), atoi(subEl->Attribute("currentRow")));
                 user->setObjectType(subEl->Attribute("type"));
                 stateObjects.push_back(user);
+                nbOfLivesToSave++;
             }  
         }
         else if(e->Value() == std::string("play_time")){
@@ -306,11 +311,6 @@ void GameScene::handleEvent(){
         
         case SDL_KEYDOWN:
                 switch(event.key.keysym.sym){
-                    case SDLK_ESCAPE:
-                        std::cout << "GameScene" <<std::endl;
-                        SmileStateMachine::Instance()->switchState(new GameOverScene());
-                    break;
-                    
                     case SDLK_UP:
                         if((pUser->getImgYPos()-50) >= 0 && dy==0 && dx==0){
                             for(int i=0; i<stateObjects.size();i++){
@@ -366,7 +366,6 @@ void GameScene::handleEvent(){
 }
 
 bool GameScene::onEnterState(){
-    gameWinningStates = false;
     srand(time(0));
     dx = dy = delta = timeStartGameTimer = nbOfSavedLives = 0;
     pUser = new PlayerUser();

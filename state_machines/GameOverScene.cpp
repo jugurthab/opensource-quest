@@ -2,6 +2,9 @@
 
 const std::string GameOverScene::gameOverStateID = "GAME_OVER_STATE";
 
+GameOverScene::GameOverScene(bool gameWon){
+    userWinGame = gameWon;
+}
 
 void GameOverScene::updateState(){
     currentFra = (SDL_GetTicks()/20) %2;
@@ -65,7 +68,12 @@ void GameOverScene::handleEvent(){
 
 bool GameOverScene::onEnterState(){
     currentFra =0;
-    textGameOver = new TextObject(40,{0,255,0}, "Do not loose hope!");    
+    if(userWinGame){
+        textGameOver = new TextObject(40, {255, 255, 0}, "Well done!");
+    } else {
+        textGameOver = new TextObject(40, {0, 255, 0}, "Do not loose hope!");
+    }
+
     textGameOver->loadObject("assets/fonts/Deutsch.ttf", "gameoverfont", -1, 30, 200, 120, -1, -1);
     std::cout << "onEnter GameOverScene" << std::endl;
     gameOverButton = new MenuObject();

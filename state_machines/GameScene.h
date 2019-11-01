@@ -33,20 +33,19 @@ class GameScene : public GeneralStateMachine
         TextObject *GameSceneText;
         TextObject *savedLives;
         PlayerUser *pUser;
-        int playerUserCurrentFrame;
-        int playerUserCurrentRow;
-        int nbOfSavedLives;
-        long timeStart;
-        long timeEllapsedToUpdate;
+        int playerUserCurrentFrame = 0;
+        int playerUserCurrentRow = 0;
+        int nbOfSavedLives = 0;
+        int nbOfLivesToSave = 0;
+        long timeStart = 0;
+        long timeEllapsedToUpdate = 0;
 
-        long timeStartGameTimer;
-        long timeEllapsedTimer;
-        int dx, dy;
-        int delta;
-        int directionChooser;
-        unsigned int timeLeft;
-
-        bool gameWinningStates;
+        long timeStartGameTimer = 0;
+        long timeEllapsedTimer = 0;
+        int dx = 0, dy = 0;
+        int delta = 0;
+        int directionChooser = 0;
+        unsigned int timeLeft = 0;
 };
 
 #endif
