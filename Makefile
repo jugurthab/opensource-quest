@@ -7,7 +7,7 @@ else
 endif
 LDFLAGS=`sdl2-config --cflags --libs` -lSDL2_mixer -lSDL2_ttf -ltinyxml2 -std=c++11
 
-EXEC=gamequest
+EXEC=openquest
 SRC= $(wildcard *.cpp image_manager/*.cpp game_objects/*.cpp state_machines/*.cpp soundHandler/*.cpp font_manager/*.cpp)
 OBJ= $(SRC:.c=.o)
 
@@ -17,8 +17,8 @@ ifeq ($(DEBUG_ENABLED),yes)
 else
 	@echo "Game generated in release mode"
 endif
-	@echo "run game as follow : $$ ./gamequest"
-gamequest: $(OBJ)
+	@echo "run game as follow : $$ ./openquest"
+openquest: $(OBJ)
 	@$(CC) -o $@ $^ $(LDFLAGS)
 
 

@@ -18,7 +18,10 @@ Opensource quest is based on **SDL** and some of it's extensions :
 
 > $ make
 
-> $ ./gamequest
+> $ ./openquest
+
+
+![Opensource quest](https://github.com/jugurthab/opensource-quest/blob/master/assets/openquest.png)
 
 
 **Have faith in opensource!!!!!!!!!!!!** 
