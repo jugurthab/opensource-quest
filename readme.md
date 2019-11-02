@@ -1,6 +1,6 @@
 ﻿# Opensource quest
 
-Follow the opensource community and gather as much as you can of opensource blocks, pay attention to proprietary enemies blocks (*which do not play a fair play*).
+Follow the old people (*caused by closed source*) using the **Linux** pinguin and make them younger (*by going through them*), **pay attention to proprietary enemies blocks (*which do not play a fair play*)**.
 
 Enjoy the game!!!!!!
 
