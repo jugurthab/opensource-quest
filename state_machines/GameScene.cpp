@@ -16,7 +16,7 @@ void GameScene::setLivesSavedText(int savedLivesCounter){
     if(nbOfSavedLives<0)
         nbOfSavedLives =0;
     gameImgManager::Instance()->eraseImg("gameSceneLivesSaved");
-    sprintf(tmpLives, "lives saved : %d", nbOfSavedLives);
+    sprintf(tmpLives, "lives saved : %d / %d", nbOfSavedLives, nbOfLivesToSave);
     savedLives = new TextObject(20, {255,0,255}, tmpLives);
     savedLives->loadObject("assets/fonts/Deutsch.ttf", "gameSceneLivesSaved", -3, 5, 200, 60, -1, -1);
     savedLives->updateObject();
