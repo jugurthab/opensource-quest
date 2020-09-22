@@ -26,7 +26,6 @@ void EntryMenu::handleEvent(){
         
         case SDL_KEYDOWN:
                 if(event.key.keysym.sym==SDLK_ESCAPE){
-                    
                     startGame();
                 }
                         
@@ -86,7 +85,7 @@ bool EntryMenu::onExitState(){
 
 
 void EntryMenu::startGame(){
-    SmileStateMachine::Instance()->switchState(new GameScene());   
+    SmileStateMachine::Instance()->switchState(new LevelSelector());   
 }
 
 void EntryMenu::exitGame(){

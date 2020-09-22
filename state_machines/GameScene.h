@@ -14,6 +14,8 @@
 class GameScene : public GeneralStateMachine
 {
     public:
+
+        GameScene(int gameLevel);
         void updateState();
         void renderState();
 
@@ -46,6 +48,8 @@ class GameScene : public GeneralStateMachine
         int delta = 0;
         int directionChooser = 0;
         unsigned int timeLeft = 0;
+
+        int gameLevel = 0;
 };
 
 #endif

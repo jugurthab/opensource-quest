@@ -4,7 +4,7 @@
 #include "GeneralStateMachine.h"
 #include "../game_objects/MenuObject.h"
 #include "../game_objects/TextObject.h"
-#include "GameScene.h"
+#include "LevelSelector.h"
 
 enum Play_Button_State {
     HOVER_NONE = 0,

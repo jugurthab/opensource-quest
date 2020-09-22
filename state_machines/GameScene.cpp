@@ -4,6 +4,10 @@
 
 const std::string GameScene::gameStateID = "GAME_STATE";
 
+GameScene::GameScene(int gameLevel){
+    this->gameLevel = gameLevel;
+}
+
 char* GameScene::setTimeLeftText(){
     char* tmp;
     sprintf(tmp, "Time left : %d", timeLeft);
@@ -204,9 +208,11 @@ void GameScene::renderState(){
 bool GameScene::parseXMLLevel(){
    // create main level XML document container
     tinyxml2::XMLDocument xmlDoc;
-        
+    char levelToLoad[50];
+    printf("this->gameLevel %d\n", this->gameLevel);
+    sprintf(levelToLoad, "game_levels/level%d.xml", this->gameLevel);    
     // load xml file
-    if(xmlDoc.LoadFile("game_levels/level1.xml") != tinyxml2::XML_SUCCESS)
+    if(xmlDoc.LoadFile(levelToLoad) != tinyxml2::XML_SUCCESS)
     {
         std::cerr << "loading XML level file failed " << xmlDoc.ErrorID() <<"\n";
         return false;
