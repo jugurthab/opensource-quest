@@ -20,10 +20,14 @@ void LevelSelector::handleEvent(){
     SDL_Event event = smileHandleUserEvent::Instance()->updateUserInput();
 
     switch(event.type){
-        
         case SDL_KEYDOWN:
-                        
-            break;
+            if(event.key.keysym.sym==SDLK_ESCAPE){
+                //SmileStateMachine::Instance()->removeState();
+                SmileStateMachine::Instance()->switchState(new EntryMenu());
+            }
+            
+        break;
+       
 
 
         case SDL_MOUSEMOTION:
@@ -67,7 +71,7 @@ bool LevelSelector::onEnterState(){
         stateObjects.push_back(levelButtons[i]);  
     }
     
-    SmileSoundHandler::Instance()->loadSound("assets/music/bensound-birthofahero.mp3", "back", SOUND_MUSIC);
+    SmileSoundHandler::Instance()->loadSound("assets/music/Invisible-Forces.mp3", "back", SOUND_MUSIC);
     SmileSoundHandler::Instance()->playBackMusic("back", -1);
 
     stateObjects.push_back(text);

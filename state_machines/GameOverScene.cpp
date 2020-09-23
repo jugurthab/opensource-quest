@@ -27,7 +27,6 @@ void GameOverScene::handleEvent(){
         
         case SDL_KEYDOWN:
                 if(event.key.keysym.sym==SDLK_ESCAPE){
-                    std::cout << "GameScene" <<std::endl;
                     //SmileStateMachine::Instance()->removeState();
                     SmileStateMachine::Instance()->switchState(new EntryMenu());
                 }
@@ -57,15 +56,14 @@ void GameOverScene::handleEvent(){
 }
 
 bool GameOverScene::onEnterState(){
-    currentFra =0;
+    currentFra = 0;
     if(userWinGame){
-        textGameOver = new TextObject(40, {255, 255, 0}, "Well done!");
+        textGameOver = new TextObject(40, {0, 255, 0}, "Well done!");
     } else {
-        textGameOver = new TextObject(40, {0, 255, 0}, "Do not loose hope!");
+        textGameOver = new TextObject(40, {255, 0, 0}, "Do not loose hope!");
     }
 
     textGameOver->loadObject("assets/fonts/Deutsch.ttf", "gameoverfont", -1, 30, 200, 120, -1, -1);
-    std::cout << "onEnter GameOverScene" << std::endl;
     gameOverButton = new MenuObject();
         
     restartbutton = new MenuObject();
@@ -83,7 +81,6 @@ bool GameOverScene::onEnterState(){
     return true;
 }
 bool GameOverScene::onExitState(){
-    std::cout << "onExit GameOverScene" << std::endl;
     clearObjectsFromScene();
     return true;
 }

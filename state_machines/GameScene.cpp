@@ -210,7 +210,6 @@ bool GameScene::parseXMLLevel(){
    // create main level XML document container
     tinyxml2::XMLDocument xmlDoc;
     char levelToLoad[50];
-    printf("this->gameLevel %d\n", this->gameLevel);
     sprintf(levelToLoad, "game_levels/level%d.xml", this->gameLevel);    
     // load xml file
     if(xmlDoc.LoadFile(levelToLoad) != tinyxml2::XML_SUCCESS)
@@ -228,10 +227,7 @@ bool GameScene::parseXMLLevel(){
 
     for(tinyxml2::XMLElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
     {      
-        if(e->Value() == std::string("level_difficulty")){
-            std::cout << "level_difficulty : " << e->GetText() << std::endl;
-        }
-        else if(e->Value() == std::string("player")){ 
+        if(e->Value() == std::string("player")){ 
             int posX = 0, posY = 0;
             std::string pathToImg = "assets/";
             pathToImg += e->Attribute("id");
@@ -281,7 +277,6 @@ bool GameScene::parseXMLLevel(){
             int posX = 0, posY = 0;
             std::string pathToImg = "assets/";
             pathToImg += e->Attribute("id");
-            std::cout << e->Attribute("id") << std::endl;
             for(tinyxml2::XMLElement* subEl = e->FirstChildElement(); subEl != NULL; subEl = subEl->NextSiblingElement()){
                 Users* user = new Users();
                 posX = atoi(subEl->Attribute("x"));
@@ -303,9 +298,12 @@ void GameScene::handleEvent(){
     SDL_Event event = smileHandleUserEvent::Instance()->updateUserInput();
 
     switch(event.type){
-        
+
         case SDL_KEYDOWN:
                 switch(event.key.keysym.sym){
+                    case SDLK_ESCAPE:
+                        SmileStateMachine::Instance()->switchState(new EntryMenu());
+                    break;
                     case SDLK_UP:
                         if((pUser->getImgYPos()-50) >= 0 && dy==0 && dx==0){
                             for(int i=0; i<stateObjects.size();i++){
@@ -356,7 +354,12 @@ void GameScene::handleEvent(){
                         }
                         pUser->setFlipDirection(SDL_FLIP_HORIZONTAL);
                     break;
-                }          
+                }
+            break;
+        // Used only for dev
+         /*case SDL_MOUSEBUTTONDOWN:
+                printf("X = %d; Y = %d\n", event.button.x, event.button.y);
+            break;  */     
     }
 }
 
