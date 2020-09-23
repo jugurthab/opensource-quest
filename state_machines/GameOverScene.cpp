@@ -1,4 +1,4 @@
-#include "EntryMenu.h"
+#include "GameOverScene.h"
 
 const std::string GameOverScene::gameOverStateID = "GAME_OVER_STATE";
 
@@ -38,13 +38,8 @@ void GameOverScene::handleEvent(){
         case SDL_MOUSEMOTION:
                 if(event.motion.x > restartbutton->getImgXPos() && event.motion.x<restartbutton->getImgXPos()+restartbutton->getImgWidth() && event.motion.y > restartbutton->getImgYPos() && event.motion.y<restartbutton->getImgYPos()+restartbutton->getImgHeight())
                     restartbutton->setObjectState(1);
-        
-                /*else if(event.motion.x > exitButton->getImgXPos() && event.motion.x < exitButton->getImgXPos()+ exitButton->getImgWidth() && event.motion.y > exitButton->getImgYPos() && event.motion.y< exitButton->getImgYPos()+ exitButton->getImgHeight())
-                    exitButton->setObjectState(1);*/
-
-                else{
-                    restartbutton->setObjectState(0);
-                  //  exitButton->setObjectState(0);   
+                 else{
+                    restartbutton->setObjectState(0);  
                  }       
             break;
 
@@ -53,11 +48,6 @@ void GameOverScene::handleEvent(){
                     restartbutton->setObjectState(2);
                     goToMainMenu();
                 }
-
-/*                else if(event.button.x > exitButton->getImgXPos() && event.button.x < exitButton->getImgXPos()+ exitButton->getImgWidth() && event.button.y > exitButton->getImgYPos() && event.button.y < exitButton->getImgYPos()+ exitButton->getImgHeight()){
-                    exitButton->setObjectState(2);
-                    exitGame();
-                }*/
             break;
 
         default:
@@ -99,7 +89,7 @@ bool GameOverScene::onExitState(){
 }
 
 void GameOverScene::goToMainMenu(){
-    SmileStateMachine::Instance()->switchState(new EntryMenu());   
+    SmileStateMachine::Instance()->switchState(new LevelSelector());   
 }
 
 void GameOverScene::exitGame(){
