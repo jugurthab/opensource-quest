@@ -34,6 +34,7 @@ class GameScene : public GeneralStateMachine
         static const std::string gameStateID;
         TextObject *GameSceneText;
         TextObject *savedLives;
+        TextObject *gameLevelText;
         PlayerUser *pUser;
         int playerUserCurrentFrame = 0;
         int playerUserCurrentRow = 0;

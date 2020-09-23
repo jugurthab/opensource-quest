@@ -198,6 +198,7 @@ void GameScene::updateState(){
 void GameScene::renderState(){    
     GameSceneText->drawObject(SDL_FLIP_NONE);
     savedLives->drawObject(SDL_FLIP_NONE);
+    gameLevelText->drawObject(SDL_FLIP_NONE);
     for (std::vector<GlobalGameObjectBlueprint*>::iterator it = stateObjects.begin() ; it != stateObjects.end(); ++it)
     {
             (*it)->drawObject(SDL_FLIP_NONE);
@@ -370,6 +371,12 @@ bool GameScene::onEnterState(){
     GameSceneText->loadObject("assets/fonts/Deutsch.ttf", "gameScene", -2, 5, 200, 60, -1, -1);
     savedLives = new TextObject(20, {255,0,255}, "lives saved : 0");
     savedLives->loadObject("assets/fonts/Deutsch.ttf", "gameSceneLivesSaved", -3, 5, 200, 60, -1, -1);
+    
+    char level[20];
+    sprintf(level, "level : %d", this->gameLevel);
+    gameLevelText = new TextObject(20, {255,0,255}, level);
+    gameLevelText->loadObject("assets/fonts/Deutsch.ttf", "gameLevel", -1, 5, 200, 60, -1, -1);
+
     return true;
 }
 bool GameScene::onExitState(){

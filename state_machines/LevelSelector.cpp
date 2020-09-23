@@ -62,7 +62,7 @@ bool LevelSelector::onEnterState(){
         levelButtons[i] = new MenuObject();
         char buttonID[20] = "Level";
         sprintf(buttonID, "%s%d", buttonID, i);
-        levelButtons[i]->loadObject("assets/play_button.bmp", buttonID, 120, 100 + (i * 100), 400, 100, 0, 0);
+        levelButtons[i]->loadObject("assets/game_level.bmp", buttonID, 120, 100 + (i * 75), 400, 50, 0, i);
 
         stateObjects.push_back(levelButtons[i]);  
     }
