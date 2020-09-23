@@ -1,38 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <level>
-    <level_difficulty>1</level_difficulty>
-    <play_time>80</play_time>
+    <level_difficulty>3</level_difficulty>
+    <play_time>60</play_time>
     <enemies id="propriatary.bmp">    
             <position x="50" y="250"></position>
             <position x="300" y="300"></position>
             <position x="400" y="50"></position>
+            <position x="50" y="550"></position>
     </enemies>
 
     <enemies id="mac-icon.bmp">    
             <position x="0" y="0"></position>
             <position x="300" y="350"></position>
             <position x="400" y="250"></position>
+            <position x="400" y="150"></position>
+            <position x="500" y="250"></position>
     </enemies>
 
-    <users id="users.bmp">    
-            <position x="0" y="150" currentFrame="0" currentRow="4" type="boy"></position>
-            <position x="500" y="400" currentFrame="3" currentRow="4" type="girl"></position>
-            <position x="250" y="400" currentFrame="6" currentRow="4" type="boyGreen"></position>
+    <users id="users.bmp">
+            <position x="500" y="150" currentFrame="0" currentRow="4" type="boy"></position>
+            <position x="50" y="200" currentFrame="3" currentRow="4" type="girl"></position>
+            <position x="0" y="400" currentFrame="6" currentRow="4" type="boyGreen"></position>
     </users>
 
     <obstacles id="Brick_Block.bmp">           
-            <position x="0" y="50"></position>
-            <position x="50" y="100"></position>
-            <position x="50" y="150"></position>
-            <position x="100" y="150"></position>
-            <position x="250" y="150"></position>
-            <position x="350" y="250"></position>
-            <position x="150" y="250"></position>
-            <position x="250" y="100"></position>
+        <position x="0" y="100"></position>
+        <position x="0" y="150"></position>
+        <position x="0" y="200"></position>
+        <position x="0" y="250"></position>
+        <position x="0" y="450"></position>
+        <position x="0" y="50"></position>
+        <position x="100" y="200"></position>
+        <position x="100" y="350"></position>
+        <position x="100" y="50"></position>
+        <position x="150" y="200"></position>
+        <position x="150" y="250"></position>
+        <position x="200" y="100"></position>
+        <position x="200" y="450"></position>
+        <position x="250" y="100"></position>
+        <position x="300" y="100"></position>
+        <position x="300" y="250"></position>
+        <position x="350" y="250"></position>
+        <position x="350" y="250"></position>
+        <position x="350" y="450"></position>
+        <position x="400" y="350"></position>
+        <position x="400" y="400"></position>
+        <position x="450" y="300"></position>
+        <position x="450" y="450"></position>
+        <position x="450" y="50"></position>
+        <position x="50" y="150"></position>
+        <position x="500" y="400"></position>
+        <position x="550" y="250"></position>
+        <position x="550" y="450"></position>
     </obstacles>
 
     <player id="linux.bmp">
-            <positionX>400</positionX>
-            <positionY>400</positionY>        
+            <positionX>550</positionX>
+            <positionY>50</positionY>        
     </player>
 </level>

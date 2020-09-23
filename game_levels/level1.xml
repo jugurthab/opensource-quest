@@ -21,14 +21,14 @@
     </users>
 
     <obstacles id="Brick_Block.bmp">           
-            <position x="0" y="50"></position>
-            <position x="50" y="100"></position>
-            <position x="50" y="150"></position>
-            <position x="100" y="150"></position>
-            <position x="250" y="150"></position>
-            <position x="350" y="250"></position>
-            <position x="150" y="250"></position>
-            <position x="250" y="100"></position>
+        <position x="0" y="50"></position>
+        <position x="100" y="150"></position>
+        <position x="150" y="250"></position>
+        <position x="250" y="100"></position>
+        <position x="250" y="150"></position>
+        <position x="350" y="250"></position>
+        <position x="50" y="100"></position>
+        <position x="50" y="150"></position>
     </obstacles>
 
     <player id="linux.bmp">
