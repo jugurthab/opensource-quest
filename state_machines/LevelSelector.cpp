@@ -44,6 +44,7 @@ void LevelSelector::handleEvent(){
 
                         selectedGameLevel = i+1;
                         SmileStateMachine::Instance()->switchState(new GameScene(selectedGameLevel));
+                        break;
                     }
                 }
             break;
